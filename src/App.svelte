@@ -6,12 +6,11 @@
   import { testObj } from "./stores.js";
   import { onMount } from "svelte";
 
-  // let tallys = [];
-  // let placeholder = [
-  //   { title: "Morning runs 🏃‍♂️", count: 0 },
-  //   { title: "UFO sightings 🛸", count: 4 },
-  //   { title: "Daily vitamins 💊", count: 56 },
-  //   { title: "Vampires hunted 🧛🏻‍♂️", count: 13 }
+  // let testObj = [
+  //   { title: "red", count: 1, uid: 1 },
+  //   { title: "blue", count: 2, uid: 2 },
+  //   { title: "green", count: 3, uid: 3 },
+  //   { title: "yellow", count: 4, uid: 4 }
   // ];
   onMount(() => {
     // $testObj.forEach(element => {
@@ -26,17 +25,17 @@
       count: event.detail.count,
       uid: event.detail.title.length
     };
-    testObj.update(entry => {
-      entry.unshift(item);
-    });
+    let newObj = Array.from($testObj);
+    newObj.unshift(item);
+    console.log("New object:", newObj);
+    testObj.update(entry => newObj);
+    console.log("Store object:", $testObj);
+    // testObj.update(entry => {
+    //   entry.unshift(item);
+    //   entry = entry;
+    //   console.log(entry);
+    // });
   }
-  // let tally = {
-  //   title: event.detail.title,
-  //   count: 0
-  // };
-  // tallys.push(tally);
-  // tallys = tallys.reverse();
-  // console.log(tallys); }
 </script>
 
 <style global>

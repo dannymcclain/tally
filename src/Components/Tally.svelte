@@ -1,8 +1,5 @@
 <script>
-  // export let tally = {
-  //   title: "UFO Sightings",
-  //   count: 0
-  // };
+  // import { tallys } from "./stores.js";
   export let title = "UFOs";
   export let count = 0;
 

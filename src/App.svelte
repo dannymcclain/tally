@@ -6,42 +6,43 @@
   import { testObj } from "./stores.js";
   import { onMount } from "svelte";
 
-  let tallys = [];
-  let placeholder = [
-    { title: "Morning runs 🏃‍♂️", count: 0 },
-    { title: "UFO sightings 🛸", count: 4 },
-    { title: "Daily vitamins 💊", count: 56 },
-    { title: "Vampires hunted 🧛🏻‍♂️", count: 13 }
-  ];
+  // let tallys = [];
+  // let placeholder = [
+  //   { title: "Morning runs 🏃‍♂️", count: 0 },
+  //   { title: "UFO sightings 🛸", count: 4 },
+  //   { title: "Daily vitamins 💊", count: 56 },
+  //   { title: "Vampires hunted 🧛🏻‍♂️", count: 13 }
+  // ];
   onMount(() => {
-    tallys = [
-      { title: "Morning runs 🏃‍♂️", count: 0 },
-      { title: "UFO sightings 🛸", count: 4 },
-      { title: "Daily vitamins 💊", count: 56 },
-      { title: "Vampires hunted 🧛🏻‍♂️", count: 13 }
-    ];
-    // tallys = placeholder.map(entry => {
-    //   entry = { title: entry.title, count: entry.count };
-    //   tallys.push(entry);
-    //   tallys = tallys;
+    // $testObj.forEach(element => {
+    //   console.log(element);
     // });
+    console.log("The test object is", $testObj);
   });
 
   function createTally(event) {
-    let tally = {
+    let item = {
       title: event.detail.title,
-      count: 0
+      count: event.detail.count,
+      uid: event.detail.title.length
     };
-    tallys.push(tally);
-    tallys = tallys.reverse();
-    console.log(tallys);
+    testObj.update(entry => {
+      entry.unshift(item);
+    });
   }
+  // let tally = {
+  //   title: event.detail.title,
+  //   count: 0
+  // };
+  // tallys.push(tally);
+  // tallys = tallys.reverse();
+  // console.log(tallys); }
 </script>
 
 <style global>
   @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap");
 
-  body {
+  :global(body) {
     font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
       sans-serif;
@@ -55,17 +56,16 @@
 </style>
 
 <main>
-  <Tally />
   <Header />
-  <NewTally on:add={createTally} />
-  {#each tallys as entry}
-    <Tally title={entry.title} count={entry.count} />
+  {#each $testObj as object, i}
+    <p>{i + 1}. {object.title}, {object.count}</p>
   {/each}
-  <!-- 	
-  <Tally title="Morning runs 🏃‍♂️" />
-  <Tally title="UFO sightings 🛸" />
-  <Tally title="Daily vitamins 💊" />
-  <Tally title="Vampires hunted 🧛🏻‍♂️" /> -->
+
+  <NewTally on:add={createTally} />
+
+  {#each $testObj as { title, count }}
+    <Tally {title} {count} />
+  {/each}
 
   <Footer />
 </main>

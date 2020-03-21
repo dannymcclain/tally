@@ -6,7 +6,8 @@
 
   function sendTally() {
     dispatch("add", {
-      text: title
+      title: title,
+      count: 0
     });
     title = "";
   }

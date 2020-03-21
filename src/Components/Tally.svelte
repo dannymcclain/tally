@@ -1,5 +1,9 @@
 <script>
-  export let title = "UFO Sightings";
+  // export let tally = {
+  //   title: "UFO Sightings",
+  //   count: 0
+  // };
+  export let title = "UFOs";
   export let count = 0;
 
   function deincrement() {

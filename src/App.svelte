@@ -4,33 +4,33 @@
   import Footer from "./Components/Footer.svelte";
   import NewTally from "./Components/NewTally.svelte";
   import { testObj } from "./stores.js";
-  function updateObj() {
-    let newVal = { title: "yellow", count: 1, uid: 66 };
-    testObj.update(thing => ({ ...thing, newVal }));
-    console.log($testObj);
-  }
+  import { onMount } from "svelte";
+
+  let tallys = [];
   let placeholder = [
     { title: "Morning runs 🏃‍♂️", count: 0 },
     { title: "UFO sightings 🛸", count: 4 },
     { title: "Daily vitamins 💊", count: 56 },
     { title: "Vampires hunted 🧛🏻‍♂️", count: 13 }
   ];
-  let tallys = [];
-  let storedTallys = placeholder.map(entry => {
-    entry = { title: entry.title, count: entry.count };
-    tallys.push(entry);
-    tallys = tallys;
+  onMount(() => {
+    tallys = [
+      { title: "Morning runs 🏃‍♂️", count: 0 },
+      { title: "UFO sightings 🛸", count: 4 },
+      { title: "Daily vitamins 💊", count: 56 },
+      { title: "Vampires hunted 🧛🏻‍♂️", count: 13 }
+    ];
+    // tallys = placeholder.map(entry => {
+    //   entry = { title: entry.title, count: entry.count };
+    //   tallys.push(entry);
+    //   tallys = tallys;
+    // });
   });
-  console.log(tallys);
-  // onMount check localStorage,
-  // if localStorage let tallys = localStorage.map(entry => {
-  // 	return entry.title
-  // })
 
   function createTally(event) {
     let tally = {
-      title: event.detail.text
-      // count: 0
+      title: event.detail.title,
+      count: 0
     };
     tallys.push(tally);
     tallys = tallys.reverse();
@@ -54,18 +54,18 @@
   }
 </style>
 
-<h1>The test object is {testObj}</h1>
-<button on:click={updateObj}>Update</button>
 <main>
+  <Tally />
   <Header />
   <NewTally on:add={createTally} />
-  {#each tallys as tally}
-    <Tally title={tally.title} count={tally.count} />
+  {#each tallys as entry}
+    <Tally title={entry.title} count={entry.count} />
   {/each}
   <!-- 	
   <Tally title="Morning runs 🏃‍♂️" />
   <Tally title="UFO sightings 🛸" />
   <Tally title="Daily vitamins 💊" />
   <Tally title="Vampires hunted 🧛🏻‍♂️" /> -->
+
   <Footer />
 </main>

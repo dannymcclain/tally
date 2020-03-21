@@ -1,30 +1,71 @@
 <script>
-	export let name;
+  import Header from "./Components/Header.svelte";
+  import Tally from "./Components/Tally.svelte";
+  import Footer from "./Components/Footer.svelte";
+  import NewTally from "./Components/NewTally.svelte";
+  import { testObj } from "./stores.js";
+  function updateObj() {
+    let newVal = { title: "yellow", count: 1, uid: 66 };
+    testObj.update(thing => ({ ...thing, newVal }));
+    console.log($testObj);
+  }
+  let placeholder = [
+    { title: "Morning runs 🏃‍♂️", count: 0 },
+    { title: "UFO sightings 🛸", count: 4 },
+    { title: "Daily vitamins 💊", count: 56 },
+    { title: "Vampires hunted 🧛🏻‍♂️", count: 13 }
+  ];
+  let tallys = [];
+  let storedTallys = placeholder.map(entry => {
+    entry = { title: entry.title, count: entry.count };
+    tallys.push(entry);
+    tallys = tallys;
+  });
+  console.log(tallys);
+  // onMount check localStorage,
+  // if localStorage let tallys = localStorage.map(entry => {
+  // 	return entry.title
+  // })
+
+  function createTally(event) {
+    let tally = {
+      title: event.detail.text
+      // count: 0
+    };
+    tallys.push(tally);
+    tallys = tallys.reverse();
+    console.log(tallys);
+  }
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+<style global>
+  @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap");
 
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
+  body {
+    font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+      sans-serif;
+  }
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
+  @media (min-width: 640px) {
+    main {
+      max-width: none;
+    }
+  }
 </style>
+
+<h1>The test object is {testObj}</h1>
+<button on:click={updateObj}>Update</button>
+<main>
+  <Header />
+  <NewTally on:add={createTally} />
+  {#each tallys as tally}
+    <Tally title={tally.title} count={tally.count} />
+  {/each}
+  <!-- 	
+  <Tally title="Morning runs 🏃‍♂️" />
+  <Tally title="UFO sightings 🛸" />
+  <Tally title="Daily vitamins 💊" />
+  <Tally title="Vampires hunted 🧛🏻‍♂️" /> -->
+  <Footer />
+</main>

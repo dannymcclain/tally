@@ -39,7 +39,6 @@
       }
     });
     let UpdatedTallyList = tallysUpdate.filter(entry => {
-      console.log(entry.id, tallyId);
       return entry.id != tallyId;
     });
     tallys.update(current => UpdatedTallyList);
@@ -49,7 +48,7 @@
 
 <style>
   section {
-    padding: 12px 20px;
+    padding: 10px 20px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -69,9 +68,27 @@
     display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: flex-start;
     align-items: center;
   }
+  .title {
+    flex: 2;
+    justify-content: flex-start;
+  }
+  .delete {
+    margin-right: 16px;
+    background: transparent;
+    opacity: 0.2;
+    transition: opacity 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+  .delete:hover {
+    background: transparent;
+    opacity: 1;
+  }
+  .controls {
+    flex: 1;
+    justify-content: space-between;
+  }
+
   .controls p {
     margin: 0;
     padding: 0;
@@ -102,7 +119,35 @@
 
 <section>
   <div class="title">
-    <button on:click={deleteTally}>Delete</button>
+    <button class="delete" on:click={deleteTally}>
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3 5H15L14.1528 15.1661C14.0664 16.2027 13.1999 17 12.1597
+          17H5.84027C4.80009 17 3.93356 16.2027 3.84717 15.1661L3 5Z"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round" />
+        <path
+          d="M1 5H17"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round" />
+        <path
+          d="M5 3C5 1.89543 5.89543 1 7 1H11C12.1046 1 13 1.89543 13 3V5H5V3Z"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+
+    </button>
     <p class="title">{title}</p>
   </div>
   <div class="controls">

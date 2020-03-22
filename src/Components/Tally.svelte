@@ -59,7 +59,7 @@
     border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: 4px;
     font-size: 16px;
-    line-height: 1;
+    line-height: 1.6;
     color: rgba(255, 255, 255, 1);
     margin-bottom: 24px;
   }
@@ -97,6 +97,7 @@
   }
   .controls {
     flex: 1;
+    max-width: 124px;
     justify-content: space-between;
   }
   .controls p {

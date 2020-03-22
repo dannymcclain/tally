@@ -4,11 +4,6 @@
 
 <style>
   footer {
-    /* display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center; */
     margin: 72px 0;
     font-size: 12px;
     line-height: 1;

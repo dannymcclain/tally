@@ -4,8 +4,8 @@
   export let count;
   export let id;
 
-  let tallysUpdate = Array.from($tallys);
   function deincrement() {
+    let tallysUpdate = Array.from($tallys);
     tallysUpdate.forEach(function(entry) {
       if (entry.id === id) {
         if (entry.count >= 1) {
@@ -19,6 +19,7 @@
     });
   }
   function increment() {
+    let tallysUpdate = Array.from($tallys);
     tallysUpdate.forEach(function(entry) {
       if (entry.id === id) {
         let higherCount = (entry.count += 1);

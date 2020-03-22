@@ -8,20 +8,24 @@
   function deincrement() {
     tallysUpdate.forEach(function(entry) {
       if (entry.id === id) {
-        let newCount = (entry.count -= 1);
-        entry.count = newCount;
+        if (entry.count >= 1) {
+          let lowerCount = (entry.count -= 1);
+          entry.count = lowerCount;
+        } else {
+          return;
+        }
       }
       tallys.update(current => tallysUpdate);
     });
-
-    // if (count > 1) {
-    //   count -= 1;
-    // } else {
-    //   count = 0;
-    // }
   }
   function increment() {
-    count += 1;
+    tallysUpdate.forEach(function(entry) {
+      if (entry.id === id) {
+        let higherCount = (entry.count += 1);
+        entry.count = higherCount;
+      }
+      tallys.update(current => tallysUpdate);
+    });
   }
 </script>
 

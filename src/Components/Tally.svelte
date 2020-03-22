@@ -1,4 +1,6 @@
 <script>
+  import { fade } from "svelte/transition";
+  import { cubicOut } from "svelte/easing";
   import { tallys } from "../stores.js";
   export let title;
   export let count;
@@ -125,7 +127,7 @@
   }
 </style>
 
-<section>
+<section transition:fade={{ duration: 200, easing: cubicOut }}>
   <div class="title">
     <button class="delete" on:click={deleteTally}>
       <svg

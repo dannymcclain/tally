@@ -1,6 +1,7 @@
 <script>
   import { uuid } from "uuidv4";
   import { tallys } from "../stores.js";
+  import { onMount } from "svelte";
   function createTally() {
     let newTally = {
       title: title,
@@ -14,6 +15,14 @@
     title = null;
   }
   let title = null;
+
+  onMount(() => {
+    document.addEventListener("keydown", event => {
+      if (event.code === "Enter") {
+        createTally();
+      }
+    });
+  });
 </script>
 
 <style>

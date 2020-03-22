@@ -42,7 +42,7 @@
   <Header />
   <NewTally />
   {#each $tallys as { title, count, id } (id)}
-    <div animate:flip={{ duration: 400, easing: cubicOut }}>
+    <div animate:flip={{ duration: 300, easing: cubicOut }}>
       <Tally {title} {count} {id} />
     </div>
   {/each}

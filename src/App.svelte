@@ -3,8 +3,10 @@
   import Tally from "./Components/Tally.svelte";
   import Footer from "./Components/Footer.svelte";
   import NewTally from "./Components/NewTally.svelte";
+  import { backInOut } from "svelte/easing";
   import { tallys } from "./stores.js";
   import { onMount } from "svelte";
+  import { flip } from "svelte/animate";
   onMount(() => {
     const data = JSON.parse(localStorage.getItem("tallys"));
     if (data) {
@@ -39,8 +41,10 @@
 <main>
   <Header />
   <NewTally />
-  {#each $tallys as { title, count, id }}
-    <Tally {title} {count} {id} />
+  {#each $tallys as { title, count, id } (id)}
+    <div animate:flip>
+      <Tally {title} {count} {id} />
+    </div>
   {/each}
   <Footer />
 

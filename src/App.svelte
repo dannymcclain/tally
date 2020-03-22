@@ -21,7 +21,10 @@
       Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
       sans-serif;
   }
-
+  main {
+    width: 100%;
+    background: lightblue;
+  }
   @media (min-width: 640px) {
     main {
       max-width: none;
@@ -31,15 +34,14 @@
 
 <main>
   <Header />
-
   <NewTally />
-
   {#each $tallys as { title, count, id }}
     <Tally {title} {count} {id} />
   {/each}
-
   <Footer />
+
   {#each $tallys as { title, count, id }}
     <p>{title} - {count} - {id}</p>
   {/each}
+
 </main>

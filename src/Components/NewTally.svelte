@@ -1,16 +1,15 @@
 <script>
   import { uuid } from "uuidv4";
   import { tallys } from "../stores.js";
-  let id = $tallys.length;
   function createTally() {
     let newTally = {
       title: title,
       count: 0,
       id: uuid()
     };
-    let newObj = Array.from($tallys);
-    newObj.unshift(newTally);
-    tallys.update(entry => newObj);
+    let newTallys = Array.from($tallys);
+    newTallys.unshift(newTally);
+    tallys.update(current => newTallys);
     localStorage.setItem("tallys", JSON.stringify($tallys));
     title = null;
   }

@@ -20,10 +20,11 @@
     font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
       sans-serif;
+    background: #000;
+    color: rgba(255, 255, 255, 0.4);
   }
   main {
     width: 100%;
-    background: lightblue;
   }
   @media (min-width: 640px) {
     main {

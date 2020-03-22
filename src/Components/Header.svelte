@@ -3,7 +3,27 @@
 </script>
 
 <style>
-
+  header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    /* margin: 72px 0; */
+    margin: 40px 20px;
+  }
+  h1 {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 1;
+    color: #ffffff;
+  }
+  h2 {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.4);
+  }
 </style>
 
 <header>

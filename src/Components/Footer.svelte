@@ -4,11 +4,12 @@
 
 <style>
   footer {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
+    margin: 72px 0;
     font-size: 12px;
     line-height: 1;
     color: rgba(255, 255, 255, 0.4);
@@ -28,5 +29,4 @@
     A small thing by
     <a href="https://dannymcclain.com">Danny McClain</a>
   </p>
-  <button>About</button>
 </footer>

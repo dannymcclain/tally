@@ -47,10 +47,6 @@
 </script>
 
 <style>
-  :root {
-    --bezier: cubic-bezier(0.4, 0, 0, 1);
-  }
-
   section {
     padding: 10px 20px;
     display: flex;

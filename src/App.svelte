@@ -15,7 +15,9 @@
 
 <style global>
   @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap");
-
+  :global(:root) {
+    --bezier: cubic-bezier(0.4, 0, 0, 1);
+  }
   :global(body) {
     font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",

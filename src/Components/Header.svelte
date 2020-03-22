@@ -10,7 +10,7 @@
     justify-content: space-between;
     align-items: center;
     /* margin: 72px 0; */
-    margin: 40px 20px;
+    margin: 40px 0;
   }
   h1 {
     font-weight: bold;

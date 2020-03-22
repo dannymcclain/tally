@@ -24,7 +24,8 @@
     color: rgba(255, 255, 255, 0.4);
   }
   main {
-    width: 100%;
+    width: 90%;
+    margin: 0 auto;
   }
   @media (min-width: 640px) {
     main {
@@ -40,9 +41,5 @@
     <Tally {title} {count} {id} />
   {/each}
   <Footer />
-
-  {#each $tallys as { title, count, id }}
-    <p>{title} - {count} - {id}</p>
-  {/each}
 
 </main>

@@ -47,6 +47,10 @@
 </script>
 
 <style>
+  :root {
+    --bezier: cubic-bezier(0.4, 0, 0, 1);
+  }
+
   section {
     padding: 10px 20px;
     display: flex;
@@ -59,6 +63,13 @@
     font-size: 16px;
     line-height: 1;
     color: rgba(255, 255, 255, 1);
+    margin-bottom: 24px;
+  }
+  section:hover .title {
+    transform: translateX(0);
+  }
+  section:hover .delete {
+    opacity: 0.4;
   }
   .count {
     font-weight: bold;
@@ -71,16 +82,18 @@
     align-items: center;
   }
   .title {
+    transform: translateX(-16px);
     flex: 2;
     justify-content: flex-start;
+    transition: transform 400ms var(--bezier);
   }
   .delete {
-    margin-right: 16px;
+    margin-right: 8px;
     background: transparent;
-    opacity: 0.2;
-    transition: opacity 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+    opacity: 0;
+    transition: opacity 300ms var(--bezier);
   }
-  .delete:hover {
+  section:hover .delete:hover {
     background: transparent;
     opacity: 1;
   }
@@ -88,7 +101,6 @@
     flex: 1;
     justify-content: space-between;
   }
-
   .controls p {
     margin: 0;
     padding: 0;
@@ -108,9 +120,9 @@
     cursor: pointer;
     margin: 0;
     padding: 0;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     border-radius: 50%;
-    transition: background 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: background 300ms var(--bezier);
   }
   button:hover {
     background: rgba(255, 255, 255, 1);

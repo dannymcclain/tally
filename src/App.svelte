@@ -6,7 +6,7 @@
   import { tallys } from "./stores.js";
   import { onMount } from "svelte";
   onMount(() => {
-    // console.log("The test object is", $tallys);
+    console.log("The test object is", $tallys);
   });
 </script>
 
@@ -31,9 +31,12 @@
 
   <NewTally />
 
-  {#each $tallys as { title, count }}
-    <Tally {title} {count} />
+  {#each $tallys as { title, count, id }}
+    <Tally {title} {count} {id} />
   {/each}
 
   <Footer />
+  {#each $tallys as { title, count, id }}
+    <p>{title} - {count} - {id}</p>
+  {/each}
 </main>

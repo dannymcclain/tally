@@ -1,12 +1,12 @@
 <script>
+  import { uuid } from "uuidv4";
   import { tallys } from "../stores.js";
-
+  let id = $tallys.length;
   function createTally() {
     let newTally = {
       title: title,
       count: 0,
-      uid: title.length
-      // ^ need to fix this uid
+      id: uuid()
     };
     let newObj = Array.from($tallys);
     newObj.unshift(newTally);

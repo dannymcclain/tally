@@ -16,6 +16,7 @@
         }
       }
       tallys.update(current => tallysUpdate);
+      localStorage.setItem("tallys", JSON.stringify($tallys));
     });
   }
   function increment() {
@@ -26,6 +27,7 @@
         entry.count = higherCount;
       }
       tallys.update(current => tallysUpdate);
+      localStorage.setItem("tallys", JSON.stringify($tallys));
     });
   }
 </script>

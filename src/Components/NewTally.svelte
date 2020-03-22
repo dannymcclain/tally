@@ -11,7 +11,7 @@
     let newObj = Array.from($tallys);
     newObj.unshift(newTally);
     tallys.update(entry => newObj);
-    console.log("Store object:", $tallys);
+    localStorage.setItem("tallys", JSON.stringify($tallys));
     title = null;
   }
   let title = null;

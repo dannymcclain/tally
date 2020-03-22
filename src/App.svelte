@@ -6,7 +6,10 @@
   import { tallys } from "./stores.js";
   import { onMount } from "svelte";
   onMount(() => {
-    console.log("The test object is", $tallys);
+    const data = JSON.parse(localStorage.getItem("tallys"));
+    if (data) {
+      tallys.update(entry => data);
+    }
   });
 </script>
 

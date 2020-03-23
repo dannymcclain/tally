@@ -7,12 +7,12 @@
   import { onMount } from "svelte";
   import { flip } from "svelte/animate";
   import { cubicOut } from "svelte/easing";
-  onMount(() => {
-    const data = JSON.parse(localStorage.getItem("tallys"));
-    if (data) {
-      tallys.update(entry => data);
-    }
-  });
+  // onMount(() => {
+  //   const data = JSON.parse(localStorage.getItem("tallys"));
+  //   if (data) {
+  //     tallys.update(entry => data);
+  //   }
+  // });
 </script>
 
 <style>
@@ -37,6 +37,7 @@
 <main>
   <Header />
   <NewTally />
+  <p>Bozo</p>
   {#each $tallys as { title, count, id } (id)}
     <div class="tally" animate:flip={{ duration: 300, easing: cubicOut }}>
       <Tally {title} {count} {id} />

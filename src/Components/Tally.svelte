@@ -49,7 +49,7 @@
   function updateTitle() {
     let tallysUpdate = Array.from($tallys);
     tallysUpdate.forEach(function(entry) {
-      if (entry.id === id) {
+      if (entry.id === id && title.length > 0) {
         entry.title = title;
       }
       tallys.update(current => tallysUpdate);

@@ -37,7 +37,6 @@
 <main>
   <Header />
   <NewTally />
-  <p>Bozo</p>
   {#each $tallys as { title, count, id } (id)}
     <div class="tally" animate:flip={{ duration: 300, easing: cubicOut }}>
       <Tally {title} {count} {id} />

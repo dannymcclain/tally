@@ -60,7 +60,7 @@
 
 <style>
   section {
-    padding: 20px 20px 20px 16px;
+    padding: 10px 20px 10px 16px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -128,6 +128,16 @@
   }
   button:hover {
     background: rgba(255, 255, 255, 1);
+  }
+  input {
+    flex: 2;
+    background: rgba(255, 255, 255, 0);
+    outline: none;
+    border: none;
+    padding: 13px 0;
+    margin: 0 16px 0 0;
+    cursor: text;
+    color: rgba(255, 255, 255, 1);
   }
 </style>
 

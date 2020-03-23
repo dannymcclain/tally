@@ -46,6 +46,16 @@
     tallys.update(current => UpdatedTallyList);
     localStorage.setItem("tallys", JSON.stringify($tallys));
   }
+  function updateTitle() {
+    let tallysUpdate = Array.from($tallys);
+    tallysUpdate.forEach(function(entry) {
+      if (entry.id === id) {
+        entry.title = title;
+      }
+      tallys.update(current => tallysUpdate);
+      localStorage.setItem("tallys", JSON.stringify($tallys));
+    });
+  }
 </script>
 
 <style>
@@ -77,10 +87,6 @@
   .title {
     flex: 2;
     justify-content: flex-start;
-  }
-  .title p {
-    padding: 0;
-    margin: 0;
   }
   .delete {
     margin-right: 12px;
@@ -156,7 +162,11 @@
       </svg>
 
     </button>
-    <p class="title">{title}</p>
+    <input
+      class="title-input"
+      type="text"
+      bind:value={title}
+      on:input={updateTitle} />
   </div>
   <div class="controls">
     <button on:click={decrement}>

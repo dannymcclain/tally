@@ -2,19 +2,23 @@
   import { uuid } from "uuidv4";
   import { tallys } from "../stores.js";
   import { onMount } from "svelte";
-  function createTally() {
-    let newTally = {
-      title: title,
-      count: 0,
-      id: uuid()
-    };
-    let newTallys = Array.from($tallys);
-    newTallys.unshift(newTally);
-    tallys.update(current => newTallys);
-    localStorage.setItem("tallys", JSON.stringify($tallys));
-    title = null;
-  }
   let title = null;
+  function createTally() {
+    if (title) {
+      let newTally = {
+        title: title,
+        count: 0,
+        id: uuid()
+      };
+      let newTallys = Array.from($tallys);
+      newTallys.unshift(newTally);
+      tallys.update(current => newTallys);
+      localStorage.setItem("tallys", JSON.stringify($tallys));
+      title = null;
+    } else {
+      return;
+    }
+  }
 
   onMount(() => {
     document.addEventListener("keydown", event => {

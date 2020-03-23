@@ -73,7 +73,12 @@
     color: rgba(255, 255, 255, 1);
     margin-bottom: 24px;
   }
-
+  section:hover .title {
+    transform: translateX(0);
+  }
+  section:hover .delete {
+    opacity: 0.4;
+  }
   .count {
     font-weight: bold;
   }
@@ -85,13 +90,15 @@
     align-items: center;
   }
   .title {
+    transform: translateX(-16px);
     flex: 2;
     justify-content: flex-start;
+    transition: transform 400ms var(--bezier);
   }
   .delete {
-    margin-right: 12px;
+    margin-right: 8px;
     background: transparent;
-    opacity: 0.2;
+    opacity: 0;
     transition: opacity 300ms var(--bezier);
   }
   section:hover .delete:hover {
@@ -100,7 +107,7 @@
   }
   .controls {
     flex: 1;
-    max-width: 108px;
+    max-width: 124px;
     justify-content: space-between;
   }
   .controls p {

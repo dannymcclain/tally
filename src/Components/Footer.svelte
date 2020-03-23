@@ -4,7 +4,7 @@
 
 <style>
   footer {
-    margin: 40px 0;
+    margin: 48px 0;
     font-size: 12px;
     line-height: 1;
     color: rgba(255, 255, 255, 0.4);

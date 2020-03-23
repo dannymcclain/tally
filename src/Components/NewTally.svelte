@@ -83,7 +83,6 @@
 </style>
 
 <section>
-
   <input type="text" bind:value={title} placeholder="Add a tally..." />
   <button disabled={title ? false : true} on:click={createTally}>
     <svg

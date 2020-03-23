@@ -50,7 +50,7 @@
 
 <style>
   section {
-    padding: 20px;
+    padding: 20px 20px 20px 16px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -63,12 +63,7 @@
     color: rgba(255, 255, 255, 1);
     margin-bottom: 24px;
   }
-  section:hover .title {
-    transform: translateX(0);
-  }
-  section:hover .delete {
-    opacity: 0.4;
-  }
+
   .count {
     font-weight: bold;
   }
@@ -80,19 +75,17 @@
     align-items: center;
   }
   .title {
-    transform: translateX(-16px);
     flex: 2;
     justify-content: flex-start;
-    transition: transform 400ms var(--bezier);
   }
   .title p {
     padding: 0;
     margin: 0;
   }
   .delete {
-    margin-right: 8px;
+    margin-right: 12px;
     background: transparent;
-    opacity: 0;
+    opacity: 0.2;
     transition: opacity 300ms var(--bezier);
   }
   section:hover .delete:hover {
@@ -101,7 +94,7 @@
   }
   .controls {
     flex: 1;
-    max-width: 124px;
+    max-width: 108px;
     justify-content: space-between;
   }
   .controls p {

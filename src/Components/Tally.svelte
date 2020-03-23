@@ -46,11 +46,21 @@
     tallys.update(current => UpdatedTallyList);
     localStorage.setItem("tallys", JSON.stringify($tallys));
   }
+  function updateTitle() {
+    let tallysUpdate = Array.from($tallys);
+    tallysUpdate.forEach(function(entry) {
+      if (entry.id === id) {
+        entry.title = title;
+      }
+      tallys.update(current => tallysUpdate);
+      localStorage.setItem("tallys", JSON.stringify($tallys));
+    });
+  }
 </script>
 
 <style>
   section {
-    padding: 20px 20px 20px 16px;
+    padding: 10px 20px 10px 16px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -77,10 +87,6 @@
   .title {
     flex: 2;
     justify-content: flex-start;
-  }
-  .title p {
-    padding: 0;
-    margin: 0;
   }
   .delete {
     margin-right: 12px;
@@ -123,6 +129,16 @@
   button:hover {
     background: rgba(255, 255, 255, 1);
   }
+  input {
+    flex: 2;
+    background: rgba(255, 255, 255, 0);
+    outline: none;
+    border: none;
+    padding: 13px 0;
+    margin: 0 16px 0 0;
+    cursor: text;
+    color: rgba(255, 255, 255, 1);
+  }
 </style>
 
 <section transition:fade={{ duration: 200, easing: cubicOut }}>
@@ -156,7 +172,11 @@
       </svg>
 
     </button>
-    <p class="title">{title}</p>
+    <input
+      class="title-input"
+      type="text"
+      bind:value={title}
+      on:input={updateTitle} />
   </div>
   <div class="controls">
     <button on:click={decrement}>

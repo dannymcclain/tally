@@ -16,12 +16,16 @@
     font-size: 20px;
     line-height: 1;
     color: #ffffff;
+    padding: 0;
+    margin: 0;
   }
   h2 {
     font-weight: normal;
     font-size: 16px;
     line-height: 1;
     color: rgba(255, 255, 255, 0.4);
+    padding: 0;
+    margin: 0;
   }
 </style>
 

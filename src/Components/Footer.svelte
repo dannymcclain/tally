@@ -4,10 +4,14 @@
 
 <style>
   footer {
-    margin: 56px 0;
+    margin: 40px 0;
     font-size: 12px;
     line-height: 1;
     color: rgba(255, 255, 255, 0.4);
+  }
+  p {
+    padding: 0;
+    margin: 0;
   }
   a {
     color: rgba(255, 255, 255, 0.4);

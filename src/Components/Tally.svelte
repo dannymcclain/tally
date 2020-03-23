@@ -6,7 +6,7 @@
   export let count;
   export let id;
 
-  function deincrement() {
+  function decrement() {
     let tallysUpdate = Array.from($tallys);
     tallysUpdate.forEach(function(entry) {
       if (entry.id === id) {
@@ -50,7 +50,7 @@
 
 <style>
   section {
-    padding: 10px 20px;
+    padding: 20px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -84,6 +84,10 @@
     flex: 2;
     justify-content: flex-start;
     transition: transform 400ms var(--bezier);
+  }
+  .title p {
+    padding: 0;
+    margin: 0;
   }
   .delete {
     margin-right: 8px;
@@ -162,7 +166,7 @@
     <p class="title">{title}</p>
   </div>
   <div class="controls">
-    <button on:click={deincrement}>
+    <button on:click={decrement}>
       <svg
         width="12"
         height="2"

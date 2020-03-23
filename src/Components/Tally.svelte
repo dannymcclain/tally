@@ -46,21 +46,11 @@
     tallys.update(current => UpdatedTallyList);
     localStorage.setItem("tallys", JSON.stringify($tallys));
   }
-  function updateTitle() {
-    let tallysUpdate = Array.from($tallys);
-    tallysUpdate.forEach(function(entry) {
-      if (entry.id === id && title.length > 0) {
-        entry.title = title;
-      }
-      tallys.update(current => tallysUpdate);
-      localStorage.setItem("tallys", JSON.stringify($tallys));
-    });
-  }
 </script>
 
 <style>
   section {
-    padding: 10px 20px 10px 16px;
+    padding: 20px 20px 20px 16px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -73,12 +63,7 @@
     color: rgba(255, 255, 255, 1);
     margin-bottom: 24px;
   }
-  section:hover .title {
-    transform: translateX(0);
-  }
-  section:hover .delete {
-    opacity: 0.4;
-  }
+
   .count {
     font-weight: bold;
   }
@@ -90,15 +75,17 @@
     align-items: center;
   }
   .title {
-    transform: translateX(-16px);
     flex: 2;
     justify-content: flex-start;
-    transition: transform 400ms var(--bezier);
+  }
+  .title p {
+    padding: 0;
+    margin: 0;
   }
   .delete {
-    margin-right: 8px;
+    margin-right: 12px;
     background: transparent;
-    opacity: 0;
+    opacity: 0.2;
     transition: opacity 300ms var(--bezier);
   }
   section:hover .delete:hover {
@@ -107,7 +94,7 @@
   }
   .controls {
     flex: 1;
-    max-width: 124px;
+    max-width: 108px;
     justify-content: space-between;
   }
   .controls p {
@@ -135,16 +122,6 @@
   }
   button:hover {
     background: rgba(255, 255, 255, 1);
-  }
-  input {
-    flex: 2;
-    background: rgba(255, 255, 255, 0);
-    outline: none;
-    border: none;
-    padding: 13px 0;
-    margin: 0 16px 0 0;
-    cursor: text;
-    color: rgba(255, 255, 255, 1);
   }
 </style>
 
@@ -179,11 +156,7 @@
       </svg>
 
     </button>
-    <input
-      class="title-input"
-      type="text"
-      bind:value={title}
-      on:input={updateTitle} />
+    <p class="title">{title}</p>
   </div>
   <div class="controls">
     <button on:click={decrement}>

@@ -2,24 +2,19 @@
   import { uuid } from "uuidv4";
   import { tallys } from "../stores.js";
   import { onMount } from "svelte";
-  let title = "";
   function createTally() {
-    let newTally;
-    if (title !== "") {
-      newTally = {
-        title: title,
-        count: 0,
-        id: uuid()
-      };
-    } else {
-      return;
-    }
+    let newTally = {
+      title: title,
+      count: 0,
+      id: uuid()
+    };
     let newTallys = Array.from($tallys);
     newTallys.unshift(newTally);
     tallys.update(current => newTallys);
     localStorage.setItem("tallys", JSON.stringify($tallys));
-    title = "";
+    title = null;
   }
+  let title = null;
 
   onMount(() => {
     document.addEventListener("keydown", event => {
@@ -89,7 +84,7 @@
 
 <section>
   <input type="text" bind:value={title} placeholder="Add a tally..." />
-  <button disabled={title.length > 0 ? false : true} on:click={createTally}>
+  <button disabled={title ? false : true} on:click={createTally}>
     <svg
       width="12"
       height="12"

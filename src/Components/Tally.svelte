@@ -2,10 +2,16 @@
   import { fade } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import { tallys } from "../stores.js";
+
   export let title;
   export let count;
   export let id;
+  let editing = false;
 
+  function toggleEdit() {
+    title.length > 0 ? console.log(">0") : console.log("<0");
+    editing = !editing;
+  }
   function decrement() {
     let tallysUpdate = Array.from($tallys);
     tallysUpdate.forEach(function(entry) {
@@ -55,6 +61,7 @@
       tallys.update(current => tallysUpdate);
       localStorage.setItem("tallys", JSON.stringify($tallys));
     });
+    editing = false;
   }
 </script>
 
@@ -131,7 +138,7 @@
   }
   input {
     flex: 2;
-    background: rgba(255, 255, 255, 0);
+    background: rgba(255, 255, 255, 0.16);
     outline: none;
     border: none;
     padding: 13px 0;
@@ -139,10 +146,69 @@
     cursor: text;
     color: rgba(255, 255, 255, 1);
   }
+  .reg-btn {
+    height: auto;
+    width: auto;
+    background: #333;
+    color: #fff;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 12px;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
 </style>
 
 <section transition:fade={{ duration: 200, easing: cubicOut }}>
-  <div class="title">
+  {#if !editing}
+    <p>{title}</p>
+    <button class="reg-btn" on:click={toggleEdit}>Edit</button>
+    <div class="controls">
+      <button on:click={decrement}>
+        <svg
+          width="12"
+          height="2"
+          viewBox="0 0 12 2"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M1 1H11"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+      <p class="count">{count}</p>
+      <button on:click={increment}>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M6 1V11M1 6H11"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+  {:else}
+    <button class="reg-btn" on:click={deleteTally}>Delete</button>
+    <input class="title-input" type="text" bind:value={title} />
+    <button
+      class="reg-btn"
+      disabled={title.length > 0 ? null : true}
+      on:click={updateTitle}>
+      Save
+    </button>
+  {/if}
+
+  <!-- <div class="title">
     <button class="delete" on:click={deleteTally}>
       <svg
         width="18"
@@ -210,5 +276,5 @@
           stroke-linejoin="round" />
       </svg>
     </button>
-  </div>
+  </div> -->
 </section>

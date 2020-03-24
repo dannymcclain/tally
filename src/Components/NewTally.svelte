@@ -2,6 +2,7 @@
   import { uuid } from "uuidv4";
   import { tallys } from "../stores.js";
   import { onMount } from "svelte";
+  import { onDestroy } from "svelte";
   function createTally() {
     let newTally = {
       title: title,
@@ -16,13 +17,16 @@
   }
   let title = null;
 
-  onMount(() => {
-    document.addEventListener("keydown", event => {
-      if (event.code === "Enter") {
-        createTally();
-      }
-    });
-  });
+  // onMount(() => {
+  //   document.addEventListener("keydown", event => {
+  //     if (event.code === "Enter") {
+  //       createTally();
+  //     }
+  //   });
+  // });
+  // onDestroy(() => {
+  //   document.removeEventListener("keydown", event);
+  // });
 </script>
 
 <style>

@@ -2,6 +2,7 @@
   import { uuid } from "uuidv4";
   import { tallys } from "../stores.js";
   import { onMount } from "svelte";
+  import { onDestroy } from "svelte";
   let title = null;
   function createTally() {
     if (title) {
@@ -26,6 +27,9 @@
         createTally();
       }
     });
+  });
+  onDestroy(() => {
+    document.removeEventListener("keydown", event);
   });
 </script>
 

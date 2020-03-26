@@ -104,8 +104,12 @@
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    /* flex: 1; */
+    /* transform: translateX(-96px);
+    transition: transform 300ms var(--bezier); */
   }
+  /* .controls-active {
+    transform: translateX(0);
+  } */
   .controls button {
     margin-left: 16px;
   }
@@ -132,8 +136,9 @@
     padding: 0;
     opacity: 1;
     background: transparent;
-    transition: transform 300ms var(--bezier), opacity 300ms var(--bezier),
+    transition: transform 300ms var(--bezier), opacity 100ms var(--bezier),
       background 300ms var(--bezier);
+    z-index: 2;
   }
   button:hover {
     transform: scale(1.2);
@@ -180,8 +185,10 @@
     background: transparent;
   }
   .hidden {
-    opacity: 0;
+    /* opacity: 0;
     pointer-events: none;
+    z-index: 1; */
+    display: none;
   }
 </style>
 
@@ -204,8 +211,7 @@
     <!-- end count -->
   </div>
   <!-- end entry-->
-  <div class="controls">
-
+  <div class={!editing ? 'controls' : 'controls controls-active'}>
     <button
       class={!editing ? 'hidden delete' : 'delete'}
       on:click={deleteTally}>
@@ -220,6 +226,8 @@
     <button class={editing ? 'hidden edit' : 'edit'} on:click={toggleEdit}>
       <img src="./images/icon-edit.svg" alt="edit icon" />
     </button>
+
   </div>
   <!--end controls -->
+
 </section>

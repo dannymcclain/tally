@@ -29,7 +29,7 @@
   }
   main {
     width: 90%;
-    max-width: 480px;
+    max-width: 640px;
     margin: 0 auto;
   }
 </style>

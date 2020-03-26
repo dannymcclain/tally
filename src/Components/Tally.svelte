@@ -1,5 +1,6 @@
 <script>
   import { fade } from "svelte/transition";
+  import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import { tallys } from "../stores.js";
 
@@ -127,31 +128,14 @@
     transition: background 300ms var(--bezier);
     position: relative;
   }
-  button svg {
-    z-index: 2;
-    opacity: 0.2;
-    transition: opacity 350ms var(--bezier);
+
+  .save {
+    background: rgba(43, 221, 104, 0.2);
   }
-  button .btn-bg {
-    z-index: 1;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0);
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    height: 32px;
-    width: 32px;
-    transform: scale(1);
-    transition: transform 350ms var(--bezier), background 350ms var(--bezier);
+  .delete {
+    background: rgba(198, 75, 75, 0.2);
   }
-  button:hover svg {
-    opacity: 0.4;
-  }
-  button:hover .btn-bg {
-    transform: scale(1.25);
-    background: rgba(255, 255, 255, 0.2);
-  }
+
   button:disabled {
     cursor: not-allowed;
   }
@@ -191,66 +175,27 @@
       bind:value={title} />
     <div class="controls">
 
-      <button class={editing ? 'hidden' : ''} on:click={decrement}>
-        <svg
-          width="12"
-          height="2"
-          viewBox="0 0 12 2"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M1 1H11"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
+      <button class={editing ? 'hidden minus' : 'minus'} on:click={decrement}>
+        <img src="./images/icon-minus.svg" alt="minus icon" />
       </button>
       <p class="count">{count}</p>
-      <button class={editing ? 'hidden' : ''} on:click={increment}>
-        <svg
-          width="12"
-          height="12"
-          viewBox="0 0 12 12"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M6.00056 1V11M1 6.00007H11"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
+      <button class={editing ? 'hidden plus' : 'plus'} on:click={increment}>
+        <img src="./images/icon-plus.svg" alt="plus icon" />
       </button>
 
     </div>
 
   </div>
   <button
-    class={!editing ? 'hidden' : ''}
+    class={!editing ? 'hidden save' : 'save'}
     disabled={title.length > 0 ? null : true}
     on:click={updateTitle}>
-    Save
+    <img src="./images/icon-save.svg" alt="save icon" />
   </button>
-  <button class={!editing ? 'hidden' : ''} on:click={deleteTally}>
-    Delete
+  <button class={!editing ? 'hidden delete' : 'delete'} on:click={deleteTally}>
+    <img src="./images/icon-delete.svg" alt="delete icon" />
   </button>
-  <button class={editing ? 'hidden' : 'edit'} on:click={toggleEdit}>
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M6.5 3.50006L10.5 7.50006M1 9.00006V13.0001H5L12 6.00006C13.1046
-        4.89549 13.1046 3.10463 12 2.00006C10.8954 0.895488 9.10457 0.895489 8
-        2.00006L1 9.00006Z"
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round" />
-    </svg>
-    <span class="btn-bg" />
+  <button class={editing ? 'hidden edit' : 'edit'} on:click={toggleEdit}>
+    <img src="./images/icon-edit.svg" alt="edit icon" />
   </button>
 </section>

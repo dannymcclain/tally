@@ -2,6 +2,7 @@
   import { fade } from "svelte/transition";
   import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
+  import { backInOut } from "svelte/easing";
   import { tallys } from "../stores.js";
 
   export let title;
@@ -100,16 +101,11 @@
   }
 
   .controls {
-    display: inline-flex;
+    display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    /* transform: translateX(-96px);
-    transition: transform 300ms var(--bezier); */
   }
-  /* .controls-active {
-    transform: translateX(0);
-  } */
   .controls button {
     margin-left: 16px;
   }
@@ -140,9 +136,9 @@
       background 300ms var(--bezier);
     z-index: 2;
   }
-  button:hover {
+  /* button:hover {
     transform: scale(1.2);
-  }
+  } */
   .edit img {
     opacity: 0.2;
   }
@@ -184,12 +180,6 @@
     border-color: transparent;
     background: transparent;
   }
-  .hidden {
-    /* opacity: 0;
-    pointer-events: none;
-    z-index: 1; */
-    display: none;
-  }
 </style>
 
 <section>
@@ -200,34 +190,49 @@
       type="text"
       bind:value={title} />
     <div class="count">
-      <button class={editing ? 'hidden minus' : 'minus'} on:click={decrement}>
-        <img src="./images/icon-minus.svg" alt="minus icon" />
-      </button>
+      {#if !editing}
+        <button class="minus" on:click={decrement}>
+          <img src="./images/icon-minus.svg" alt="minus icon" />
+        </button>
+      {/if}
       <p>{count}</p>
-      <button class={editing ? 'hidden plus' : 'plus'} on:click={increment}>
-        <img src="./images/icon-plus.svg" alt="plus icon" />
-      </button>
+      {#if !editing}
+        <button class="plus" on:click={increment}>
+          <img src="./images/icon-plus.svg" alt="plus icon" />
+        </button>
+      {/if}
     </div>
     <!-- end count -->
   </div>
   <!-- end entry-->
-  <div class={!editing ? 'controls' : 'controls controls-active'}>
-    <button
-      class={!editing ? 'hidden delete' : 'delete'}
-      on:click={deleteTally}>
-      <img src="./images/icon-delete.svg" alt="delete icon" />
-    </button>
-    <button
-      class={!editing ? 'hidden save' : 'save'}
-      disabled={title.length > 0 ? null : true}
-      on:click={updateTitle}>
-      <img src="./images/icon-save.svg" alt="save icon" />
-    </button>
-    <button class={editing ? 'hidden edit' : 'edit'} on:click={toggleEdit}>
-      <img src="./images/icon-edit.svg" alt="edit icon" />
-    </button>
 
+  <div class="controls">
+    {#if editing}
+      <button
+        in:fly={{ x: -20, duration: 250, easing: backInOut, delay: 250 }}
+        out:fly={{ x: 20, duration: 250, easing: backInOut }}
+        class="delete"
+        on:click={deleteTally}>
+        <img src="./images/icon-delete.svg" alt="delete icon" />
+      </button>
+      <button
+        in:fly={{ x: -20, duration: 250, easing: backInOut, delay: 250 }}
+        out:fly={{ x: 20, duration: 250, easing: backInOut }}
+        class="save"
+        disabled={title.length > 0 ? null : true}
+        on:click={updateTitle}>
+        <img src="./images/icon-save.svg" alt="save icon" />
+      </button>
+    {:else}
+      <button
+        in:fly={{ x: -20, duration: 250, easing: backInOut, delay: 250 }}
+        out:fly={{ x: 20, duration: 250, easing: backInOut }}
+        class="edit"
+        on:click={toggleEdit}>
+
+        <img src="./images/icon-edit.svg" alt="edit icon" />
+      </button>
+    {/if}
   </div>
   <!--end controls -->
-
 </section>

@@ -177,57 +177,65 @@
     border-color: transparent;
     background: transparent;
   }
+  .hidden {
+    display: none;
+  }
 </style>
 
 <section>
   <div class="entry" transition:fade={{ duration: 200, easing: cubicOut }}>
-    {#if !editing}
-      <input disabled class="title-input" type="text" bind:value={title} />
-      <div class="controls">
-        <button on:click={decrement}>
-          <svg
-            width="12"
-            height="2"
-            viewBox="0 0 12 2"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M1 1H11"
-              stroke="white"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-        </button>
-        <p class="count">{count}</p>
-        <button on:click={increment}>
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M6.00056 1V11M1 6.00007H11"
-              stroke="white"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-        </button>
-      </div>
-    {:else}
-      <input class="title-input" type="text" bind:value={title} />
-      <button
-        class="reg-btn"
-        disabled={title.length > 0 ? null : true}
-        on:click={updateTitle}>
-        Save
+    <input
+      disabled={editing ? null : 'true'}
+      class="title-input"
+      type="text"
+      bind:value={title} />
+    <div class="controls">
+
+      <button class={editing ? 'hidden' : ''} on:click={decrement}>
+        <svg
+          width="12"
+          height="2"
+          viewBox="0 0 12 2"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M1 1H11"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
       </button>
-      <button class="reg-btn" on:click={deleteTally}>Delete</button>
-    {/if}
+      <p class="count">{count}</p>
+      <button class={editing ? 'hidden' : ''} on:click={increment}>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M6.00056 1V11M1 6.00007H11"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+
+    </div>
+
   </div>
-  <button class="edit" on:click={toggleEdit}>
+  <button
+    class={!editing ? 'hidden' : ''}
+    disabled={title.length > 0 ? null : true}
+    on:click={updateTitle}>
+    Save
+  </button>
+  <button class={!editing ? 'hidden' : ''} on:click={deleteTally}>
+    Delete
+  </button>
+  <button class={editing ? 'hidden' : 'edit'} on:click={toggleEdit}>
     <svg
       width="14"
       height="14"

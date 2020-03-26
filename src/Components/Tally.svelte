@@ -9,7 +9,6 @@
   let editing = false;
 
   function toggleEdit() {
-    title.length > 0 ? console.log(">0") : console.log("<0");
     editing = !editing;
   }
   function decrement() {
@@ -67,44 +66,38 @@
 
 <style>
   section {
-    padding: 10px 20px 10px 16px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .entry {
+    padding: 12px 24px 12px 12px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
-    border: 2px solid rgba(255, 255, 255, 0.15);
+    background: #151515;
     border-radius: 4px;
     font-size: 16px;
     line-height: 1.6;
     color: rgba(255, 255, 255, 1);
-    margin-bottom: 24px;
+    width: 100%;
   }
 
   .count {
     font-weight: bold;
   }
-  .controls,
-  .title {
+  .controls {
     display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
   }
-  .title {
-    flex: 2;
-    justify-content: flex-start;
-  }
-  .delete {
-    margin-right: 12px;
-    background: transparent;
-    opacity: 0.2;
-    transition: opacity 300ms var(--bezier);
-  }
-  section:hover .delete:hover {
-    background: transparent;
-    opacity: 1;
-  }
+
   .controls {
     flex: 1;
     max-width: 108px;
@@ -116,8 +109,8 @@
   }
   button {
     display: inline-flex;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
@@ -129,152 +122,127 @@
     cursor: pointer;
     margin: 0;
     padding: 0;
-    background: rgba(255, 255, 255, 0.25);
-    border-radius: 50%;
+    opacity: 1;
+    background: transparent;
     transition: background 300ms var(--bezier);
+    position: relative;
   }
-  button:hover {
-    background: rgba(255, 255, 255, 1);
+  button svg {
+    z-index: 2;
+    opacity: 0.2;
+    transition: opacity 350ms var(--bezier);
   }
-  input {
-    flex: 2;
-    background: rgba(255, 255, 255, 0.16);
-    outline: none;
-    border: none;
-    padding: 13px 0;
-    margin: 0 16px 0 0;
-    cursor: text;
-    color: rgba(255, 255, 255, 1);
+  button .btn-bg {
+    z-index: 1;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    height: 32px;
+    width: 32px;
+    transform: scale(1);
+    transition: transform 350ms var(--bezier), background 350ms var(--bezier);
   }
-  .reg-btn {
-    height: auto;
-    width: auto;
-    background: #333;
-    color: #fff;
-    border-radius: 4px;
-    padding: 4px;
-    font-size: 12px;
+  button:hover svg {
+    opacity: 0.4;
+  }
+  button:hover .btn-bg {
+    transform: scale(1.25);
+    background: rgba(255, 255, 255, 0.2);
   }
   button:disabled {
     cursor: not-allowed;
   }
+  .edit {
+    margin-left: 16px;
+  }
+  input {
+    flex: 2;
+    background: #242424;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    margin: 0;
+    border-radius: 4px;
+    cursor: text;
+    color: rgba(255, 255, 255, 1);
+    transition: border-color 200ms var(--bezier), background 200ms var(--bezier);
+  }
+  input:focus {
+    border: 2px solid rgba(255, 255, 255, 0.6);
+  }
+  input:disabled {
+    border-color: transparent;
+    background: transparent;
+  }
 </style>
 
-<section transition:fade={{ duration: 200, easing: cubicOut }}>
-  {#if !editing}
-    <p>{title}</p>
-    <button class="reg-btn" on:click={toggleEdit}>Edit</button>
-    <div class="controls">
-      <button on:click={decrement}>
-        <svg
-          width="12"
-          height="2"
-          viewBox="0 0 12 2"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M1 1H11"
-            stroke="black"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
+<section>
+  <div class="entry" transition:fade={{ duration: 200, easing: cubicOut }}>
+    {#if !editing}
+      <input disabled class="title-input" type="text" bind:value={title} />
+      <div class="controls">
+        <button on:click={decrement}>
+          <svg
+            width="12"
+            height="2"
+            viewBox="0 0 12 2"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M1 1H11"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+        <p class="count">{count}</p>
+        <button on:click={increment}>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M6.00056 1V11M1 6.00007H11"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    {:else}
+      <input class="title-input" type="text" bind:value={title} />
+      <button
+        class="reg-btn"
+        disabled={title.length > 0 ? null : true}
+        on:click={updateTitle}>
+        Save
       </button>
-      <p class="count">{count}</p>
-      <button on:click={increment}>
-        <svg
-          width="12"
-          height="12"
-          viewBox="0 0 12 12"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M6 1V11M1 6H11"
-            stroke="black"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
-      </button>
-    </div>
-  {:else}
-    <button class="reg-btn" on:click={deleteTally}>Delete</button>
-    <input class="title-input" type="text" bind:value={title} />
-    <button
-      class="reg-btn"
-      disabled={title.length > 0 ? null : true}
-      on:click={updateTitle}>
-      Save
-    </button>
-  {/if}
-
-  <!-- <div class="title">
-    <button class="delete" on:click={deleteTally}>
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 18 18"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M3 5H15L14.1528 15.1661C14.0664 16.2027 13.1999 17 12.1597
-          17H5.84027C4.80009 17 3.93356 16.2027 3.84717 15.1661L3 5Z"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round" />
-        <path
-          d="M1 5H17"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round" />
-        <path
-          d="M5 3C5 1.89543 5.89543 1 7 1H11C12.1046 1 13 1.89543 13 3V5H5V3Z"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-
-    </button>
-    <input
-      class="title-input"
-      type="text"
-      bind:value={title}
-      on:input={updateTitle} />
+      <button class="reg-btn" on:click={deleteTally}>Delete</button>
+    {/if}
   </div>
-  <div class="controls">
-    <button on:click={decrement}>
-      <svg
-        width="12"
-        height="2"
-        viewBox="0 0 12 2"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M1 1H11"
-          stroke="black"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-    </button>
-    <p class="count">{count}</p>
-    <button on:click={increment}>
-      <svg
-        width="12"
-        height="12"
-        viewBox="0 0 12 12"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M6 1V11M1 6H11"
-          stroke="black"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-    </button>
-  </div> -->
+  <button class="edit" on:click={toggleEdit}>
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M6.5 3.50006L10.5 7.50006M1 9.00006V13.0001H5L12 6.00006C13.1046
+        4.89549 13.1046 3.10463 12 2.00006C10.8954 0.895488 9.10457 0.895489 8
+        2.00006L1 9.00006Z"
+        stroke="white"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+    <span class="btn-bg" />
+  </button>
 </section>

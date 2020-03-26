@@ -3,30 +3,35 @@
   import { tallys } from "../stores.js";
   import { onMount } from "svelte";
   import { onDestroy } from "svelte";
-  function createTally() {
-    let newTally = {
-      title: title,
-      count: 0,
-      id: uuid()
-    };
-    let newTallys = Array.from($tallys);
-    newTallys.unshift(newTally);
-    tallys.update(current => newTallys);
-    localStorage.setItem("tallys", JSON.stringify($tallys));
-    title = null;
-  }
-  let title = null;
 
-  // onMount(() => {
-  //   document.addEventListener("keydown", event => {
-  //     if (event.code === "Enter") {
-  //       createTally();
-  //     }
-  //   });
-  // });
-  // onDestroy(() => {
-  //   document.removeEventListener("keydown", event);
-  // });
+  let title = null;
+  function createTally() {
+    if (title) {
+      let newTally = {
+        title: title,
+        count: 0,
+        id: uuid()
+      };
+      let newTallys = Array.from($tallys);
+      newTallys.unshift(newTally);
+      tallys.update(current => newTallys);
+      localStorage.setItem("tallys", JSON.stringify($tallys));
+      title = null;
+    } else {
+      return;
+    }
+  }
+
+  onMount(() => {
+    document.addEventListener("keydown", event => {
+      if (event.code === "Enter") {
+        createTally();
+      }
+    });
+  });
+  onDestroy(() => {
+    document.removeEventListener("keydown", event);
+  });
 </script>
 
 <style>

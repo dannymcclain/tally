@@ -90,28 +90,35 @@
   }
 
   .count {
-    font-weight: bold;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    flex: 1;
+    max-width: 108px;
+    justify-content: space-between;
   }
+
   .controls {
     display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
+    /* flex: 1; */
   }
-
-  .controls {
-    flex: 1;
-    max-width: 108px;
-    justify-content: space-between;
+  .controls button {
+    margin-left: 16px;
   }
-  .controls p {
+  .count p {
     margin: 0;
     padding: 0;
+    font-weight: bold;
   }
   button {
     display: inline-flex;
     width: 32px;
     height: 32px;
+    border-radius: 50%;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
@@ -125,10 +132,24 @@
     padding: 0;
     opacity: 1;
     background: transparent;
-    transition: background 300ms var(--bezier);
-    position: relative;
+    transition: transform 300ms var(--bezier), opacity 300ms var(--bezier),
+      background 300ms var(--bezier);
   }
-
+  button:hover {
+    transform: scale(1.2);
+  }
+  .edit img {
+    opacity: 0.2;
+  }
+  .edit {
+    background: rgba(255, 255, 255, 0);
+  }
+  .edit:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  .edit:hover img {
+    opacity: 0.4;
+  }
   .save {
     background: rgba(43, 221, 104, 0.2);
   }
@@ -138,9 +159,6 @@
 
   button:disabled {
     cursor: not-allowed;
-  }
-  .edit {
-    margin-left: 16px;
   }
   input {
     flex: 2;
@@ -173,29 +191,34 @@
       class="title-input"
       type="text"
       bind:value={title} />
-    <div class="controls">
-
+    <div class="count">
       <button class={editing ? 'hidden minus' : 'minus'} on:click={decrement}>
         <img src="./images/icon-minus.svg" alt="minus icon" />
       </button>
-      <p class="count">{count}</p>
+      <p>{count}</p>
       <button class={editing ? 'hidden plus' : 'plus'} on:click={increment}>
         <img src="./images/icon-plus.svg" alt="plus icon" />
       </button>
-
     </div>
-
+    <!-- end count -->
   </div>
-  <button
-    class={!editing ? 'hidden save' : 'save'}
-    disabled={title.length > 0 ? null : true}
-    on:click={updateTitle}>
-    <img src="./images/icon-save.svg" alt="save icon" />
-  </button>
-  <button class={!editing ? 'hidden delete' : 'delete'} on:click={deleteTally}>
-    <img src="./images/icon-delete.svg" alt="delete icon" />
-  </button>
-  <button class={editing ? 'hidden edit' : 'edit'} on:click={toggleEdit}>
-    <img src="./images/icon-edit.svg" alt="edit icon" />
-  </button>
+  <!-- end entry-->
+  <div class="controls">
+
+    <button
+      class={!editing ? 'hidden delete' : 'delete'}
+      on:click={deleteTally}>
+      <img src="./images/icon-delete.svg" alt="delete icon" />
+    </button>
+    <button
+      class={!editing ? 'hidden save' : 'save'}
+      disabled={title.length > 0 ? null : true}
+      on:click={updateTitle}>
+      <img src="./images/icon-save.svg" alt="save icon" />
+    </button>
+    <button class={editing ? 'hidden edit' : 'edit'} on:click={toggleEdit}>
+      <img src="./images/icon-edit.svg" alt="edit icon" />
+    </button>
+  </div>
+  <!--end controls -->
 </section>

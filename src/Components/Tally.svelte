@@ -2,13 +2,20 @@
   import { fade } from "svelte/transition";
   import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
-  import { backInOut } from "svelte/easing";
   import { tallys } from "../stores.js";
 
   export let title;
   export let count;
   export let id;
   let editing = false;
+
+  let buttonTransitionIn = {
+    y: 40,
+    duration: 300,
+    easing: cubicOut,
+    delay: 50
+  };
+  let buttonTransitionOut = { y: -20, duration: 200, easing: cubicOut };
 
   function toggleEdit() {
     editing = !editing;
@@ -87,27 +94,38 @@
     font-size: 16px;
     line-height: 1.6;
     color: rgba(255, 255, 255, 1);
-    width: 100%;
+    width: 85%;
   }
 
   .count {
+    flex: 1;
     display: inline-flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     flex-wrap: nowrap;
     align-items: center;
-    flex: 1;
-    max-width: 108px;
+    max-width: 92px;
     justify-content: space-between;
   }
 
   .controls {
+    width: 15%;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    justify-content: flex-start;
     align-items: center;
+    position: relative;
   }
   .controls button {
     margin-left: 16px;
+  }
+  .controls .save {
+    position: absolute;
+    right: 48px;
+  }
+  .controls .delete {
+    position: absolute;
+    right: 0;
   }
   .count p {
     margin: 0;
@@ -140,17 +158,18 @@
     transform: scale(1.2);
   } */
   .edit img {
-    opacity: 0.2;
+    /* opacity: 0.2; */
+    opacity: 0.6;
   }
   .edit {
     background: rgba(255, 255, 255, 0);
   }
-  .edit:hover {
+  /* .edit:hover {
     background: rgba(255, 255, 255, 0.2);
   }
   .edit:hover img {
     opacity: 0.4;
-  }
+  } */
   .save {
     background: rgba(43, 221, 104, 0.2);
   }
@@ -209,15 +228,15 @@
   <div class="controls">
     {#if editing}
       <button
-        in:fly={{ x: -20, duration: 250, easing: backInOut, delay: 250 }}
-        out:fly={{ x: 20, duration: 250, easing: backInOut }}
+        in:fly={buttonTransitionIn}
+        out:fly={{ buttonTransitionOut }}
         class="delete"
         on:click={deleteTally}>
         <img src="./images/icon-delete.svg" alt="delete icon" />
       </button>
       <button
-        in:fly={{ x: -20, duration: 250, easing: backInOut, delay: 250 }}
-        out:fly={{ x: 20, duration: 250, easing: backInOut }}
+        in:fly={buttonTransitionIn}
+        out:fly={{ buttonTransitionOut }}
         class="save"
         disabled={title.length > 0 ? null : true}
         on:click={updateTitle}>
@@ -225,8 +244,8 @@
       </button>
     {:else}
       <button
-        in:fly={{ x: -20, duration: 250, easing: backInOut, delay: 250 }}
-        out:fly={{ x: 20, duration: 250, easing: backInOut }}
+        in:fly={buttonTransitionIn}
+        out:fly={{ buttonTransitionOut }}
         class="edit"
         on:click={toggleEdit}>
 

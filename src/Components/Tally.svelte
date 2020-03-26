@@ -180,7 +180,8 @@
     background: transparent;
   }
   .hidden {
-    display: none;
+    opacity: 0;
+    pointer-events: none;
   }
 </style>
 

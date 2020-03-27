@@ -1,12 +1,18 @@
 <script>
   import { fade } from "svelte/transition";
   import { fly } from "svelte/transition";
-  import { cubicOut } from "svelte/easing";
-  import { backOut } from "svelte/easing";
+  import { cubicInOut, cubicOut, backOut } from "svelte/easing";
   import { tallys } from "../stores.js";
   import { tweened } from "svelte/motion";
 
+  const height = tweened(64, {
+    duration: 175,
+    easing: cubicInOut
+  });
+  $: cssHeight = $height + "px";
+
   function toggleEdit() {
+    height.set(128);
     editing = !editing;
   }
 
@@ -74,16 +80,17 @@
       localStorage.setItem("tallys", JSON.stringify($tallys));
     });
     editing = false;
+    height.set(64);
   }
 </script>
 
 <style>
   section {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-end;
     margin-bottom: 24px;
     padding: 12px 16px 12px 12px;
     background: #151515;
@@ -94,7 +101,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     font-size: 16px;
     line-height: 1.6;
@@ -114,6 +121,7 @@
 
   .controls {
     flex: 0;
+    margin-top: 12px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -201,9 +209,12 @@
   }
 </style>
 
-<section>
+<section style="height: {cssHeight}">
   {#if !editing}
-    <div class="entry" in:fly={transitionIn} out:fly={transitionOut}>
+    <div
+      class="entry"
+      in:fade={{ duration: 200, delay: 250 }}
+      out:fade={{ duration: 150 }}>
       <input {id} disabled class="title-input" type="text" bind:value={title} />
 
       <div class="count">
@@ -214,37 +225,43 @@
         <button class="plus" on:click={increment}>
           <img src="./images/icon-plus.svg" alt="plus icon" />
         </button>
-      </div>
-      <!-- end count -->
-      <div class="controls">
         <button class="edit" on:click={toggleEdit}>
           <img src="./images/icon-edit.svg" alt="edit icon" />
         </button>
       </div>
-      <!--end controls -->
+      <!-- end count -->
     </div>
     <!-- end entry-->
+    <!-- <div class="controls">
+      <button class="edit" on:click={toggleEdit}>
+        <img src="./images/icon-edit.svg" alt="edit icon" />
+      </button>
+    </div> -->
+    <!--end controls -->
   {:else}
-    <div class="entry" in:fly={transitionIn} out:fly={transitionOut}>
+    <div
+      class="entry"
+      in:fade={{ duration: 200, delay: 250 }}
+      out:fade={{ duration: 150 }}>
       <input {id} class="title-input" type="text" bind:value={title} />
 
       <div class="count">
         <p>{count}</p>
       </div>
       <!-- end count -->
-      <div class="controls">
-        <button class="delete" on:click={deleteTally}>
-          <img src="./images/icon-delete.svg" alt="delete icon" />
-        </button>
-        <button
-          class="save"
-          disabled={title.length > 0 ? null : true}
-          on:click={updateTitle}>
-          <img src="./images/icon-save.svg" alt="save icon" />
-        </button>
-      </div>
-      <!--end controls -->
     </div>
     <!-- end entry-->
+    <div class="controls">
+      <button class="delete" on:click={deleteTally}>
+        <img src="./images/icon-delete.svg" alt="delete icon" />
+      </button>
+      <button
+        class="save"
+        disabled={title.length > 0 ? null : true}
+        on:click={updateTitle}>
+        <img src="./images/icon-save.svg" alt="save icon" />
+      </button>
+    </div>
+    <!--end controls -->
   {/if}
 </section>

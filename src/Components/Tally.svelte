@@ -115,7 +115,6 @@
     font-size: 16px;
     line-height: 1.6;
     color: rgba(255, 255, 255, 1);
-    /* width: 85%; */
     flex: 2;
   }
 
@@ -191,10 +190,8 @@
     pointer-events: none;
   }
   input {
-    /* background: #242424;
-    border: 2px solid rgba(255, 255, 255, 0.2); */
-    background: transparent;
-    border: 2px solid transparent;
+    background: #242424;
+    border: 2px solid rgba(255, 255, 255, 0.2);
     flex: 2;
     outline: none;
     padding: 8px;
@@ -206,27 +203,25 @@
   }
   input:focus {
     background: #242424;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.6);
   }
   input:disabled {
-    border-color: transparent;
     background: transparent;
-  }
-  .hidden {
-    opacity: 0;
-    pointer-events: none;
+    border: 2px solid transparent;
   }
 </style>
 
 <section>
   <div class="entry" transition:fade={{ duration: 200, easing: cubicOut }}>
     <input
-      on:focus={toggleEdit}
-      on:blur={inputBlur}
       {id}
+      disabled={!editing ? 'true' : null}
       class="title-input"
       type="text"
       bind:value={title} />
+    {#if !editing}
+      <button on:click={() => (editing = true)}>edit</button>
+    {/if}
     <div class="count">
 
       <button
@@ -253,8 +248,8 @@
     <!-- end count -->
   </div>
   <!-- end entry-->
-  <div class="controls">
-    {#if editing}
+  {#if editing}
+    <div class="controls">
       <button
         in:fly={buttonTransitionIn}
         out:fly={{ buttonTransitionOut }}
@@ -270,7 +265,7 @@
         on:click={updateTitle}>
         <img src="./images/icon-save.svg" alt="save icon" />
       </button>
-    {/if}
-  </div>
+    </div>
+  {/if}
   <!--end controls -->
 </section>

@@ -210,58 +210,54 @@
 </style>
 
 <section style="height: {cssHeight}">
-  {#if !editing}
-    <div
-      class="entry"
-      in:fade={{ duration: 200, delay: 250 }}
-      out:fade={{ duration: 150 }}>
-      <input {id} disabled class="title-input" type="text" bind:value={title} />
+  <div
+    class="entry"
+    in:fade={{ duration: 200, delay: 250 }}
+    out:fade={{ duration: 150 }}>
+    <input
+      {id}
+      disabled={!editing ? true : null}
+      class="title-input"
+      type="text"
+      bind:value={title} />
 
-      <div class="count">
+    <div class="count">
+      {#if !editing}
         <button class="minus" on:click={decrement}>
-          <img src="./images/icon-minus.svg" alt="minus icon" />
+          <img
+            draggable="false"
+            src="./images/icon-minus.svg"
+            alt="minus icon" />
         </button>
-        <p>{count}</p>
+      {/if}
+      <p>{count}</p>
+      {#if !editing}
         <button class="plus" on:click={increment}>
-          <img src="./images/icon-plus.svg" alt="plus icon" />
+          <img draggable="false" src="./images/icon-plus.svg" alt="plus icon" />
         </button>
         <button class="edit" on:click={toggleEdit}>
-          <img src="./images/icon-edit.svg" alt="edit icon" />
+          <img draggable="false" src="./images/icon-edit.svg" alt="edit icon" />
         </button>
-      </div>
-      <!-- end count -->
+      {/if}
     </div>
-    <!-- end entry-->
-    <!-- <div class="controls">
-      <button class="edit" on:click={toggleEdit}>
-        <img src="./images/icon-edit.svg" alt="edit icon" />
-      </button>
-    </div> -->
-    <!--end controls -->
-  {:else}
-    <div
-      class="entry"
-      in:fade={{ duration: 200, delay: 250 }}
-      out:fade={{ duration: 150 }}>
-      <input {id} class="title-input" type="text" bind:value={title} />
-
-      <div class="count">
-        <p>{count}</p>
-      </div>
-      <!-- end count -->
-    </div>
-    <!-- end entry-->
+  </div>
+  {#if editing}
     <div class="controls">
       <button class="delete" on:click={deleteTally}>
-        <img src="./images/icon-delete.svg" alt="delete icon" />
+        <img
+          draggable="false"
+          src="./images/icon-delete.svg"
+          alt="delete icon" />
       </button>
       <button
         class="save"
         disabled={title.length > 0 ? null : true}
         on:click={updateTitle}>
-        <img src="./images/icon-save.svg" alt="save icon" />
+        <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
       </button>
     </div>
-    <!--end controls -->
   {/if}
+  <!--end controls -->
+  <!-- end entry-->
+
 </section>

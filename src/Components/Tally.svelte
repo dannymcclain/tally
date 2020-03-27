@@ -16,12 +16,12 @@
   export let editing = false;
 
   let transitionIn = {
-    y: -50,
+    y: 50,
     duration: 275,
     easing: backOut,
-    delay: 275
+    delay: 225
   };
-  let transitionOut = { x: -50, duration: 225, easing: cubicOut };
+  let transitionOut = { x: -100, duration: 225, easing: cubicOut };
 
   function decrement() {
     let tallysUpdate = Array.from($tallys);
@@ -109,26 +109,29 @@
     flex-wrap: nowrap;
     align-items: center;
     max-width: 92px;
-    justify-content: space-between;
+    justify-content: center;
   }
 
   .controls {
-    flex: 1;
-    /* width: 96px; */
+    flex: 0;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-end;
     align-items: center;
   }
-  .controls button {
-    margin-left: 16px;
-  }
 
   .count p {
-    margin: 0;
+    margin: 0 8px;
     padding: 0;
     font-weight: bold;
+  }
+  .count button {
+    opacity: 0.4;
+    transition: opacity 200ms var(--bezier);
+  }
+  .count button:hover {
+    opacity: 0.6;
   }
   button {
     display: inline-flex;
@@ -155,9 +158,18 @@
 
   .save {
     background: rgba(43, 221, 104, 0.2);
+    margin-left: 16px;
   }
   .delete {
     background: rgba(198, 75, 75, 0.2);
+  }
+
+  .edit {
+    opacity: 0.2;
+    transition: opacity 200ms var(--bezier);
+  }
+  .edit:hover {
+    opacity: 0.6;
   }
 
   button:disabled {
@@ -205,7 +217,7 @@
       </div>
       <!-- end count -->
       <div class="controls">
-        <button on:click={toggleEdit}>
+        <button class="edit" on:click={toggleEdit}>
           <img src="./images/icon-edit.svg" alt="edit icon" />
         </button>
       </div>
@@ -217,7 +229,7 @@
       <input {id} class="title-input" type="text" bind:value={title} />
 
       <div class="count">
-        <input disabled bind:value={count} />
+        <p>{count}</p>
       </div>
       <!-- end count -->
       <div class="controls">

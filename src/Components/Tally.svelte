@@ -6,22 +6,22 @@
   import { tallys } from "../stores.js";
   import { tweened } from "svelte/motion";
 
-  export let title;
-  export let count;
-  export let id;
-  let editing = false;
-
-  let transitionIn = {
-    x: 50,
-    duration: 300,
-    easing: backOut,
-    delay: 300
-  };
-  let transitionOut = { x: 50, duration: 250, easing: cubicOut };
-
   function toggleEdit() {
     editing = !editing;
   }
+
+  export let title;
+  export let count;
+  export let id;
+  export let editing = false;
+
+  let transitionIn = {
+    y: -50,
+    duration: 275,
+    easing: backOut,
+    delay: 275
+  };
+  let transitionOut = { x: -50, duration: 225, easing: cubicOut };
 
   function decrement() {
     let tallysUpdate = Array.from($tallys);
@@ -85,7 +85,7 @@
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 24px;
-    padding: 12px 24px 12px 12px;
+    padding: 12px 16px 12px 12px;
     background: #151515;
     border-radius: 4px;
     overflow: hidden;
@@ -164,7 +164,6 @@
   button:disabled {
     cursor: not-allowed;
     opacity: 0.4;
-    pointer-events: none;
   }
   input {
     background: #242424;
@@ -204,7 +203,7 @@
       </div>
       <!-- end count -->
       <div class="controls">
-        <button on:click={() => (editing = true)}>
+        <button on:click={toggleEdit}>
           <img src="./images/icon-edit.svg" alt="edit icon" />
         </button>
       </div>

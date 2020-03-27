@@ -7,6 +7,7 @@
   import { onMount } from "svelte";
   import { flip } from "svelte/animate";
   import { cubicOut } from "svelte/easing";
+
   onMount(() => {
     const data = JSON.parse(localStorage.getItem("tallys"));
     if (data) {

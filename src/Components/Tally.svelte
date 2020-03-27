@@ -17,9 +17,10 @@
   };
   let buttonTransitionOut = { y: -20, duration: 200, easing: cubicOut };
 
-  function toggleEdit() {
+  function toggleEdit(el) {
     editing = !editing;
   }
+
   function decrement() {
     let tallysUpdate = Array.from($tallys);
     tallysUpdate.forEach(function(entry) {
@@ -100,7 +101,7 @@
   .count {
     flex: 1;
     display: inline-flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
     max-width: 92px;
@@ -154,12 +155,10 @@
       background 300ms var(--bezier);
     z-index: 2;
   }
-  /* button:hover {
-    transform: scale(1.2);
-  } */
   .edit img {
     /* opacity: 0.2; */
-    opacity: 0.6;
+    opacity: 0.4;
+    transition: opacity 200ms var(--bezier);
   }
   .edit {
     background: rgba(255, 255, 255, 0);
@@ -167,9 +166,10 @@
   /* .edit:hover {
     background: rgba(255, 255, 255, 0.2);
   }
+  */
   .edit:hover img {
-    opacity: 0.4;
-  } */
+    opacity: 0.6;
+  }
   .save {
     background: rgba(43, 221, 104, 0.2);
   }
@@ -204,19 +204,28 @@
 <section>
   <div class="entry" transition:fade={{ duration: 200, easing: cubicOut }}>
     <input
+      {id}
       disabled={editing ? null : 'true'}
       class="title-input"
       type="text"
       bind:value={title} />
     <div class="count">
       {#if !editing}
-        <button class="minus" on:click={decrement}>
+        <button
+          in:fly={buttonTransitionIn}
+          out:fly={{ buttonTransitionOut }}
+          class="minus"
+          on:click={decrement}>
           <img src="./images/icon-minus.svg" alt="minus icon" />
         </button>
       {/if}
       <p>{count}</p>
       {#if !editing}
-        <button class="plus" on:click={increment}>
+        <button
+          in:fly={buttonTransitionIn}
+          out:fly={{ buttonTransitionOut }}
+          class="plus"
+          on:click={increment}>
           <img src="./images/icon-plus.svg" alt="plus icon" />
         </button>
       {/if}

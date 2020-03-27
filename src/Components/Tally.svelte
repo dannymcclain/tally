@@ -99,7 +99,7 @@
     font-size: 16px;
     line-height: 1.6;
     color: rgba(255, 255, 255, 1);
-    flex: 2;
+    width: 100%;
   }
 
   .count {
@@ -113,14 +113,13 @@
   }
 
   .controls {
-    flex: 0;
-    width: 96px;
+    flex: 1;
+    /* width: 96px; */
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-end;
     align-items: center;
-    position: relative;
   }
   .controls button {
     margin-left: 16px;
@@ -169,6 +168,7 @@
     background: #242424;
     border: 2px solid rgba(255, 255, 255, 0.2);
     flex: 2;
+    min-width: 0;
     outline: none;
     padding: 8px;
     margin: 0;

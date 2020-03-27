@@ -167,7 +167,7 @@
   input {
     background: #242424;
     border: 2px solid rgba(255, 255, 255, 0.2);
-    flex: 2;
+    flex: 3;
     min-width: 0;
     outline: none;
     padding: 8px;
@@ -184,6 +184,8 @@
   input:disabled {
     background: transparent;
     border: 2px solid transparent;
+    color: #fff;
+    opacity: 1;
   }
 </style>
 

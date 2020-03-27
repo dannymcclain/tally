@@ -2,6 +2,7 @@
   import { fade } from "svelte/transition";
   import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
+  import { backOut } from "svelte/easing";
   import { tallys } from "../stores.js";
   import { tweened } from "svelte/motion";
 
@@ -10,15 +11,15 @@
   export let id;
   let editing = false;
 
-  let buttonTransitionIn = {
-    y: 40,
+  let transitionIn = {
+    x: 50,
     duration: 300,
-    easing: cubicOut,
-    delay: 50
+    easing: backOut,
+    delay: 300
   };
-  let buttonTransitionOut = { y: -20, duration: 200, easing: cubicOut };
+  let transitionOut = { x: 50, duration: 250, easing: cubicOut };
 
-  function toggleEdit(el) {
+  function toggleEdit() {
     editing = !editing;
   }
 
@@ -74,24 +75,6 @@
     });
     editing = false;
   }
-  function oldTitle() {
-    let oldTitle;
-    let currentTallys = Array.from($tallys);
-    currentTallys.forEach(function(entry) {
-      if (entry.id === id) {
-        oldTitle = entry.title;
-      }
-    });
-    title = oldTitle;
-    editing = false;
-  }
-  function inputBlur() {
-    if (title.length === 0) {
-      oldTitle();
-    } else {
-      updateTitle();
-    }
-  }
 </script>
 
 <style>
@@ -102,16 +85,17 @@
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 24px;
+    padding: 12px 24px 12px 12px;
+    background: #151515;
+    border-radius: 4px;
+    overflow: hidden;
   }
   .entry {
-    padding: 12px 24px 12px 12px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
-    background: #151515;
-    border-radius: 4px;
     font-size: 16px;
     line-height: 1.6;
     color: rgba(255, 255, 255, 1);
@@ -132,7 +116,7 @@
     flex: 0;
     width: 96px;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-end;
     align-items: center;
@@ -141,14 +125,7 @@
   .controls button {
     margin-left: 16px;
   }
-  /* .controls .save {
-    position: absolute;
-    right: 48px;
-  }
-  .controls .delete {
-    position: absolute;
-    right: 0;
-  } */
+
   .count p {
     margin: 0;
     padding: 0;
@@ -212,60 +189,49 @@
 </style>
 
 <section>
-  <div class="entry" transition:fade={{ duration: 200, easing: cubicOut }}>
-    <input
-      {id}
-      disabled={!editing ? 'true' : null}
-      class="title-input"
-      type="text"
-      bind:value={title} />
-    {#if !editing}
-      <button on:click={() => (editing = true)}>edit</button>
-    {/if}
-    <div class="count">
+  {#if !editing}
+    <div class="entry" in:fly={transitionIn} out:fly={transitionOut}>
+      <input {id} disabled class="title-input" type="text" bind:value={title} />
 
-      <button
-        disabled={editing ? true : null}
-        in:fly={buttonTransitionIn}
-        out:fly={{ buttonTransitionOut }}
-        class="minus"
-        on:click={decrement}>
-        <img src="./images/icon-minus.svg" alt="minus icon" />
-      </button>
-
-      <p>{count}</p>
-
-      <button
-        disabled={editing ? true : null}
-        in:fly={buttonTransitionIn}
-        out:fly={{ buttonTransitionOut }}
-        class="plus"
-        on:click={increment}>
-        <img src="./images/icon-plus.svg" alt="plus icon" />
-      </button>
-
+      <div class="count">
+        <button class="minus" on:click={decrement}>
+          <img src="./images/icon-minus.svg" alt="minus icon" />
+        </button>
+        <p>{count}</p>
+        <button class="plus" on:click={increment}>
+          <img src="./images/icon-plus.svg" alt="plus icon" />
+        </button>
+      </div>
+      <!-- end count -->
+      <div class="controls">
+        <button on:click={() => (editing = true)}>
+          <img src="./images/icon-edit.svg" alt="edit icon" />
+        </button>
+      </div>
+      <!--end controls -->
     </div>
-    <!-- end count -->
-  </div>
-  <!-- end entry-->
-  {#if editing}
-    <div class="controls">
-      <button
-        in:fly={buttonTransitionIn}
-        out:fly={{ buttonTransitionOut }}
-        class="delete"
-        on:click={deleteTally}>
-        <img src="./images/icon-delete.svg" alt="delete icon" />
-      </button>
-      <button
-        in:fly={buttonTransitionIn}
-        out:fly={{ buttonTransitionOut }}
-        class="save"
-        disabled={title.length > 0 ? null : true}
-        on:click={updateTitle}>
-        <img src="./images/icon-save.svg" alt="save icon" />
-      </button>
+    <!-- end entry-->
+  {:else}
+    <div class="entry" in:fly={transitionIn} out:fly={transitionOut}>
+      <input {id} class="title-input" type="text" bind:value={title} />
+
+      <div class="count">
+        <input disabled bind:value={count} />
+      </div>
+      <!-- end count -->
+      <div class="controls">
+        <button class="delete" on:click={deleteTally}>
+          <img src="./images/icon-delete.svg" alt="delete icon" />
+        </button>
+        <button
+          class="save"
+          disabled={title.length > 0 ? null : true}
+          on:click={updateTitle}>
+          <img src="./images/icon-save.svg" alt="save icon" />
+        </button>
+      </div>
+      <!--end controls -->
     </div>
+    <!-- end entry-->
   {/if}
-  <!--end controls -->
 </section>

@@ -3,6 +3,7 @@
   import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import { tallys } from "../stores.js";
+  import { tweened } from "svelte/motion";
 
   export let title;
   export let count;
@@ -60,6 +61,7 @@
     });
     tallys.update(current => UpdatedTallyList);
     localStorage.setItem("tallys", JSON.stringify($tallys));
+    editing = false;
   }
   function updateTitle() {
     let tallysUpdate = Array.from($tallys);
@@ -71,6 +73,24 @@
       localStorage.setItem("tallys", JSON.stringify($tallys));
     });
     editing = false;
+  }
+  function oldTitle() {
+    let oldTitle;
+    let currentTallys = Array.from($tallys);
+    currentTallys.forEach(function(entry) {
+      if (entry.id === id) {
+        oldTitle = entry.title;
+      }
+    });
+    title = oldTitle;
+    editing = false;
+  }
+  function inputBlur() {
+    if (title.length === 0) {
+      oldTitle();
+    } else {
+      updateTitle();
+    }
   }
 </script>
 
@@ -95,7 +115,8 @@
     font-size: 16px;
     line-height: 1.6;
     color: rgba(255, 255, 255, 1);
-    width: 85%;
+    /* width: 85%; */
+    flex: 2;
   }
 
   .count {
@@ -109,25 +130,26 @@
   }
 
   .controls {
-    width: 15%;
+    flex: 0;
+    width: 96px;
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     flex-wrap: nowrap;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
     position: relative;
   }
   .controls button {
     margin-left: 16px;
   }
-  .controls .save {
+  /* .controls .save {
     position: absolute;
     right: 48px;
   }
   .controls .delete {
     position: absolute;
     right: 0;
-  }
+  } */
   .count p {
     margin: 0;
     padding: 0;
@@ -155,21 +177,7 @@
       background 300ms var(--bezier);
     z-index: 2;
   }
-  .edit img {
-    /* opacity: 0.2; */
-    opacity: 0.4;
-    transition: opacity 200ms var(--bezier);
-  }
-  .edit {
-    background: rgba(255, 255, 255, 0);
-  }
-  /* .edit:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-  */
-  .edit:hover img {
-    opacity: 0.6;
-  }
+
   .save {
     background: rgba(43, 221, 104, 0.2);
   }
@@ -179,12 +187,16 @@
 
   button:disabled {
     cursor: not-allowed;
+    opacity: 0.4;
+    pointer-events: none;
   }
   input {
+    /* background: #242424;
+    border: 2px solid rgba(255, 255, 255, 0.2); */
+    background: transparent;
+    border: 2px solid transparent;
     flex: 2;
-    background: #242424;
     outline: none;
-    border: 2px solid rgba(255, 255, 255, 0.2);
     padding: 8px;
     margin: 0;
     border-radius: 4px;
@@ -193,47 +205,54 @@
     transition: border-color 200ms var(--bezier), background 200ms var(--bezier);
   }
   input:focus {
-    border: 2px solid rgba(255, 255, 255, 0.6);
+    background: #242424;
+    border: 2px solid rgba(255, 255, 255, 0.2);
   }
   input:disabled {
     border-color: transparent;
     background: transparent;
+  }
+  .hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 </style>
 
 <section>
   <div class="entry" transition:fade={{ duration: 200, easing: cubicOut }}>
     <input
+      on:focus={toggleEdit}
+      on:blur={inputBlur}
       {id}
-      disabled={editing ? null : 'true'}
       class="title-input"
       type="text"
       bind:value={title} />
     <div class="count">
-      {#if !editing}
-        <button
-          in:fly={buttonTransitionIn}
-          out:fly={{ buttonTransitionOut }}
-          class="minus"
-          on:click={decrement}>
-          <img src="./images/icon-minus.svg" alt="minus icon" />
-        </button>
-      {/if}
+
+      <button
+        disabled={editing ? true : null}
+        in:fly={buttonTransitionIn}
+        out:fly={{ buttonTransitionOut }}
+        class="minus"
+        on:click={decrement}>
+        <img src="./images/icon-minus.svg" alt="minus icon" />
+      </button>
+
       <p>{count}</p>
-      {#if !editing}
-        <button
-          in:fly={buttonTransitionIn}
-          out:fly={{ buttonTransitionOut }}
-          class="plus"
-          on:click={increment}>
-          <img src="./images/icon-plus.svg" alt="plus icon" />
-        </button>
-      {/if}
+
+      <button
+        disabled={editing ? true : null}
+        in:fly={buttonTransitionIn}
+        out:fly={{ buttonTransitionOut }}
+        class="plus"
+        on:click={increment}>
+        <img src="./images/icon-plus.svg" alt="plus icon" />
+      </button>
+
     </div>
     <!-- end count -->
   </div>
   <!-- end entry-->
-
   <div class="controls">
     {#if editing}
       <button
@@ -250,15 +269,6 @@
         disabled={title.length > 0 ? null : true}
         on:click={updateTitle}>
         <img src="./images/icon-save.svg" alt="save icon" />
-      </button>
-    {:else}
-      <button
-        in:fly={buttonTransitionIn}
-        out:fly={{ buttonTransitionOut }}
-        class="edit"
-        on:click={toggleEdit}>
-
-        <img src="./images/icon-edit.svg" alt="edit icon" />
       </button>
     {/if}
   </div>

@@ -7,7 +7,7 @@
 
   const height = tweened(64, {
     duration: 175,
-    easing: cubicInOut
+    easing: backOut
   });
   $: cssHeight = $height + "px";
 
@@ -241,22 +241,19 @@
       {/if}
     </div>
   </div>
-  {#if editing}
-    <div class="controls">
-      <button class="delete" on:click={deleteTally}>
-        <img
-          draggable="false"
-          src="./images/icon-delete.svg"
-          alt="delete icon" />
-      </button>
-      <button
-        class="save"
-        disabled={title.length > 0 ? null : true}
-        on:click={updateTitle}>
-        <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
-      </button>
-    </div>
-  {/if}
+
+  <div class="controls">
+    <button class="delete" on:click={deleteTally}>
+      <img draggable="false" src="./images/icon-delete.svg" alt="delete icon" />
+    </button>
+    <button
+      class="save"
+      disabled={title.length > 0 ? null : true}
+      on:click={updateTitle}>
+      <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
+    </button>
+  </div>
+
   <!--end controls -->
   <!-- end entry-->
 

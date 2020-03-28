@@ -82,6 +82,8 @@
     editing = false;
     height.set(64);
   }
+
+  function cancelUpdate() {}
 </script>
 
 <style>
@@ -171,6 +173,12 @@
   .delete {
     background: rgba(198, 75, 75, 0.2);
   }
+  .cancel {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  .cancel img {
+    opacity: 0.4;
+  }
 
   .edit {
     opacity: 0.2;
@@ -245,6 +253,9 @@
   <div class="controls">
     <button class="delete" on:click={deleteTally}>
       <img draggable="false" src="./images/icon-delete.svg" alt="delete icon" />
+    </button>
+    <button class="cancel" on:click={cancelUpdate}>
+      <img draggable="false" src="./images/icon-cancel.svg" alt="cancel icon" />
     </button>
     <button
       class="save"

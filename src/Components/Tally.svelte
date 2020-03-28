@@ -83,7 +83,18 @@
     height.set(64);
   }
 
-  function cancelUpdate() {}
+  function cancelUpdate() {
+    let oldTitle;
+    let currentTallys = Array.from($tallys);
+    currentTallys.forEach(function(entry) {
+      if (entry.id === id) {
+        oldTitle = entry.title;
+      }
+    });
+    title = oldTitle;
+    editing = false;
+    height.set(64);
+  }
 </script>
 
 <style>
@@ -127,8 +138,9 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
+    width: 100%;
   }
 
   .count p {
@@ -262,7 +274,10 @@
       disabled={title.length > 0 ? null : true}
       on:click={updateTitle}>
       <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
-    </button>
+    </button>:click={updateTitle}>
+        <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
+      </button>
+    </div>
   </div>
 
   <!--end controls -->

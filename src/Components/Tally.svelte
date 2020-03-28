@@ -266,15 +266,17 @@
     <button class="delete" on:click={deleteTally}>
       <img draggable="false" src="./images/icon-delete.svg" alt="delete icon" />
     </button>
-    <button class="cancel" on:click={cancelUpdate}>
-      <img draggable="false" src="./images/icon-cancel.svg" alt="cancel icon" />
-    </button>
-    <button
-      class="save"
-      disabled={title.length > 0 ? null : true}
-      on:click={updateTitle}>
-      <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
-    </button>:click={updateTitle}>
+    <div>
+      <button class="cancel" on:click={cancelUpdate}>
+        <img
+          draggable="false"
+          src="./images/icon-cancel.svg"
+          alt="cancel icon" />
+      </button>
+      <button
+        class="save"
+        disabled={title.length > 0 ? null : true}
+        on:click={updateTitle}>
         <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
       </button>
     </div>

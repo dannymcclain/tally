@@ -7,13 +7,22 @@
 
   const height = tweened(64, {
     duration: 175,
-    easing: backOut
+    easing: cubicInOut
   });
   $: cssHeight = $height + "px";
 
   function toggleEdit() {
     height.set(128);
     editing = !editing;
+  }
+  function editOn() {
+    height.set(128);
+    editing = true;
+  }
+  function editOff() {
+    setTimeout(function() {
+      cancelUpdate();
+    }, 300);
   }
 
   export let title;
@@ -205,15 +214,17 @@
     opacity: 0.4;
   }
   input {
-    background: #242424;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    /* background: #242424;
+    border: 2px solid rgba(255, 255, 255, 0.2); */
+    background: transparent;
+    border: 2px solid transparent;
     flex: 3;
     min-width: 0;
     outline: none;
     padding: 8px;
     margin: 0;
     border-radius: 4px;
-    cursor: text;
+    /* cursor: pointer; */
     color: rgba(255, 255, 255, 1);
     transition: border-color 200ms var(--bezier), background 200ms var(--bezier);
   }
@@ -236,7 +247,8 @@
     out:fade={{ duration: 150 }}>
     <input
       {id}
-      disabled={!editing ? true : null}
+      on:focus={editOn}
+      on:blur={editOff}
       class="title-input"
       type="text"
       bind:value={title} />

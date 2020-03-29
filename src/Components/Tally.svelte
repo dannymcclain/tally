@@ -218,6 +218,7 @@
     border: 2px solid rgba(255, 255, 255, 0.2); */
     background: transparent;
     border: 2px solid transparent;
+    /* border-bottom: 2px solid rgba(255, 255, 255, 0.2); */
     flex: 3;
     min-width: 0;
     outline: none;
@@ -253,25 +254,26 @@
       type="text"
       bind:value={title} />
 
-    <div class="count">
-      {#if !editing}
+    {#if !editing}
+      <div
+        in:fade={{ duration: 200 }}
+        out:fly={{ y: -50, duration: 200, delay: 0 }}
+        class="count">
         <button class="minus" on:click={decrement}>
           <img
             draggable="false"
             src="./images/icon-minus.svg"
             alt="minus icon" />
         </button>
-      {/if}
-      <p>{count}</p>
-      {#if !editing}
+        <p>{count}</p>
         <button class="plus" on:click={increment}>
           <img draggable="false" src="./images/icon-plus.svg" alt="plus icon" />
         </button>
         <button class="edit" on:click={toggleEdit}>
           <img draggable="false" src="./images/icon-edit.svg" alt="edit icon" />
         </button>
-      {/if}
-    </div>
+      </div>
+    {/if}
   </div>
 
   <div class="controls">

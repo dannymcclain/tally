@@ -255,10 +255,7 @@
       bind:value={title} />
 
     {#if !editing}
-      <div
-        in:fade={{ duration: 200 }}
-        out:fly={{ y: -50, duration: 200, delay: 0 }}
-        class="count">
+      <div transition:fade={{ duration: 200 }} class="count">
         <button class="minus" on:click={decrement}>
           <img
             draggable="false"

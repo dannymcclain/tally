@@ -3,19 +3,18 @@
   import { fly } from "svelte/transition";
   import { cubicInOut, cubicOut, backOut } from "svelte/easing";
   import { tallys } from "../stores.js";
+  import { onMount } from "svelte";
 
   export let title;
   export let count;
   export let id;
   export let editing = false;
 
-  let transitionIn = {
-    y: 50,
-    duration: 275,
-    easing: backOut,
-    delay: 225
-  };
-  let transitionOut = { x: -100, duration: 225, easing: cubicOut };
+  let currentInput;
+
+  onMount(() => {
+    currentInput = document.getElementById(id);
+  });
 
   function toggleEdit() {
     editing = !editing;
@@ -66,23 +65,69 @@
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    align-items: flex-end;
+    align-items: flex-start;
     margin-bottom: 24px;
-    padding: 12px 16px 12px 12px;
-    background: #292929;
-    border-radius: 4px;
-    overflow: hidden;
   }
-  .entry {
+  .content {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
+    background: #292929;
+    border-radius: 4px 4px 0 0;
+    padding: 16px;
     font-size: 16px;
     line-height: 1.6;
     color: rgba(255, 255, 255, 1);
     width: 100%;
+  }
+
+  .controls {
+    background: #1f1f1f;
+    border-radius: 0 0 4px 4px;
+    padding: 8px 16px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .editing-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .static-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  button {
+    display: flex;
+    border-radius: 4px;
+    padding: 8px 10px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    transition: background 150ms linear, color 150ms linear,
+      opacity 150ms linear;
   }
 
   .count {
@@ -94,81 +139,55 @@
     min-width: 42px;
     max-width: 42px;
     height: 42px;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
     justify-content: center;
-    transition: background 200ms linear;
-    cursor: pointer;
-    /* cursor: n-resize; */
+    transform: scale(1);
+    transition: transform 150ms var(--bezier);
   }
   .count:hover {
     background: #474747;
   }
-  .controls {
-    flex: 0;
-    margin-top: 12px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  .count:active {
+    transform: scale(0.95);
   }
-
-  /* .count p {
-    margin: 0;
-    padding: 0;
-  } */
-
-  button {
-    display: inline-flex;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    margin: 0;
-    padding: 0;
-    opacity: 1;
-    background: transparent;
-    transition: transform 300ms var(--bezier), opacity 100ms var(--bezier),
-      background 300ms var(--bezier);
-    z-index: 2;
+  .save,
+  .edit,
+  .delete {
+    font-size: 12px;
+    line-height: 1;
+    font-weight: bold;
   }
-
+  .save img,
+  .edit img,
+  .delete img {
+    margin-right: 8px;
+  }
   .save {
-    background: rgba(43, 221, 104, 0.2);
-    margin-left: 16px;
+    color: rgba(43, 221, 104, 1);
+    background: rgba(43, 221, 104, 0.16);
+    margin-right: 8px;
+  }
+  .save:hover {
+    background: rgba(43, 221, 104, 0.32);
   }
   .delete {
-    background: rgba(198, 75, 75, 0.2);
+    color: rgba(198, 75, 75, 1);
+    background: rgba(198, 75, 75, 0.16);
   }
-  .cancel {
-    background: rgba(255, 255, 255, 0.2);
-  }
-  .cancel img {
-    opacity: 0.4;
+  .delete:hover {
+    background: rgba(198, 75, 75, 0.32);
   }
 
   .edit {
-    opacity: 0.2;
-    transition: opacity 200ms var(--bezier);
+    color: #808080;
+    background: transparent;
   }
   .edit:hover {
-    opacity: 0.6;
+    background: #333;
   }
 
-  button:disabled {
+  button:disabled,
+  button:disabled:hover,
+  button:disabled:active {
     cursor: not-allowed;
     opacity: 0.4;
   }
@@ -180,10 +199,10 @@
     min-width: 0;
     outline: none;
     padding: 8px;
-    margin: 0;
+    margin: 0 16px 0 0;
     border-radius: 4px;
     color: rgba(255, 255, 255, 1);
-    transition: border-color 200ms var(--bezier), background 200ms var(--bezier);
+    transition: border-color 150ms linear, background 150ms linear;
   }
   input:focus {
     border: 2px solid rgba(255, 255, 255, 0.6);
@@ -197,42 +216,50 @@
 </style>
 
 <section>
-  <div
-    class="entry"
-    in:fade={{ duration: 200, delay: 250 }}
-    out:fade={{ duration: 150 }}>
+  <div class="content">
     <input
       {id}
       disabled={!editing ? true : null}
       class="title-input"
       type="text"
       bind:value={title} />
-
-    {#if !editing}
-      <div class="count" on:click={increment}>
-        <p>{count}</p>
-      </div>
-    {/if}
+    <button disabled={editing ? true : null} class="count" on:click={increment}>
+      {count}
+    </button>
   </div>
 
   <div class="controls">
-    <button class="edit" on:click={toggleEdit}>
-      <img draggable="false" src="./images/icon-edit.svg" alt="edit icon" />
-    </button>
-    {#if editing}
-      <button class="delete" on:click={deleteTally}>
-        <img
-          draggable="false"
-          src="./images/icon-delete.svg"
-          alt="delete icon" />
-      </button>
-
-      <button
-        class="save"
-        disabled={title.length > 0 ? null : true}
-        on:click={updateTitle}>
-        <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
-      </button>
+    {#if !editing}
+      <div class="static-buttons">
+        <button class="edit" on:click={toggleEdit}>
+          <img draggable="false" src="./images/icon-edit.svg" alt="edit icon" />
+          Edit
+        </button>
+        <button class="edit" on:click={toggleEdit}>
+          <img
+            draggable="false"
+            src="./images/icon-clear.svg"
+            alt="edit icon" />
+          Clear
+        </button>
+      </div>
+    {:else if editing}
+      <div class="editing-buttons">
+        <button
+          class="save"
+          disabled={title.length > 0 ? null : true}
+          on:click={updateTitle}>
+          <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
+          Save
+        </button>
+        <button class="delete" on:click={deleteTally}>
+          <img
+            draggable="false"
+            src="./images/icon-delete.svg"
+            alt="delete icon" />
+          Delete
+        </button>
+      </div>
     {/if}
   </div>
 

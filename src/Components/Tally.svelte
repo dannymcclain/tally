@@ -158,19 +158,21 @@
     background: linear-gradient(180deg, #333333 0%, #292929 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #3d3d3d;
     border-radius: 20px;
-    /* transform: scale(1);
-    transition: transform 300ms cubic-bezier(0.4, 0, 0, 1); */
+    transform: scale(1);
+    transition: transform 175ms cubic-bezier(0.5, 0.25, 0.25, 1);
   }
   button:last-child {
     margin: 0;
   }
-  /* .default-icon {
-    transition: stroke var(--transition);
-  } */
+  .default-icon {
+    transition: stroke 250ms linear;
+  }
   .default:hover {
-    /* transform: scale(1.1); */
+    transform: scale(1.125);
+    /*     
     background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
+     */
   }
   .default:hover .default-icon {
     stroke: #fff;
@@ -245,7 +247,10 @@
           alt="delete icon" />
       </button>
     {/if}
-    <button disabled={editing ? true : null} class="count" on:click={increment}>
+    <button
+      class="count default"
+      disabled={editing ? true : null}
+      on:click={increment}>
       {count}
     </button>
   </div>

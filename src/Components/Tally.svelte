@@ -158,10 +158,8 @@
     background: linear-gradient(180deg, #333333 0%, #292929 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #3d3d3d;
     border-radius: 20px;
-    /*     
-    transform: scale(1);
-    transition: transform 175ms cubic-bezier(0.5, 0.25, 0.25, 1);
-   */
+    transform: translateY(0);
+    transition: transform 100ms cubic-bezier(0.5, 0.25, 0.25, 1);
   }
 
   button:last-child {
@@ -171,10 +169,12 @@
     transition: stroke 250ms linear;
   } */
   .default:hover {
-    /* transform: scale(1.125); */
-
+    /* transform: translateY(-2px); */
     background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
+  }
+  .default:active {
+    transform: translateY(2px);
   }
   .default:hover .default-icon {
     stroke: #fff;
@@ -184,6 +184,11 @@
   button:disabled:active {
     cursor: not-allowed;
     opacity: 0.4;
+  }
+  .button-group {
+    display: flex;
+    flex-direction: row;
+    margin-right: 12px;
   }
 </style>
 
@@ -199,55 +204,59 @@
 
   <div class="controls">
     {#if !editing}
-      <button class="default" on:click={toggleEdit}>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            class="default-icon"
-            d="M7.5 4.50006L11.5 8.50006M2 10.0001V14.0001H6L13 7.00006C14.1046
-            5.89549 14.1046 4.10463 13 3.00006C11.8954 1.89549 10.1046 1.89549 9
-            3.00006L2 10.0001Z"
-            stroke="#666"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
+      <div class="button-group">
+        <button class="default" on:click={toggleEdit}>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              class="default-icon"
+              d="M7.5 4.50006L11.5 8.50006M2 10.0001V14.0001H6L13
+              7.00006C14.1046 5.89549 14.1046 4.10463 13 3.00006C11.8954 1.89549
+              10.1046 1.89549 9 3.00006L2 10.0001Z"
+              stroke="#666"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
 
-      </button>
-      <button class="default" on:click={clearCount}>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            class="default-icon"
-            d="M4 12L12 4M14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137 2
-            8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8Z"
-            stroke="#666"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
-      </button>
+        </button>
+        <button class="default" on:click={clearCount}>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              class="default-icon"
+              d="M4 12L12 4M14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137
+              2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8Z"
+              stroke="#666"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
     {:else if editing}
-      <button
-        class="save"
-        disabled={title.length > 0 ? null : true}
-        on:click={updateTitle}>
-        <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
-      </button>
-      <button class="delete" on:click={deleteTally}>
-        <img
-          draggable="false"
-          src="./images/icon-delete.svg"
-          alt="delete icon" />
-      </button>
+      <div class="button-group">
+        <button
+          class="save"
+          disabled={title.length > 0 ? null : true}
+          on:click={updateTitle}>
+          <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
+        </button>
+        <button class="delete" on:click={deleteTally}>
+          <img
+            draggable="false"
+            src="./images/icon-delete.svg"
+            alt="delete icon" />
+        </button>
+      </div>
     {/if}
     <button
       class="count default"

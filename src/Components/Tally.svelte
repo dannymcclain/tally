@@ -57,6 +57,16 @@
     });
     editing = false;
   }
+  function clearCount() {
+    let tallysUpdate = Array.from($tallys);
+    tallysUpdate.forEach(function(entry) {
+      if (entry.id === id) {
+        entry.count = 0;
+      }
+      tallys.update(current => tallysUpdate);
+      localStorage.setItem("tallys", JSON.stringify($tallys));
+    });
+  }
 </script>
 
 <style>
@@ -94,14 +104,6 @@
     align-items: center;
     width: 100%;
     overflow: hidden;
-  }
-
-  .editing-buttons {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
   }
   .static-buttons {
     display: flex;
@@ -141,7 +143,7 @@
     height: 42px;
     justify-content: center;
     transform: scale(1);
-    transition: transform 150ms var(--bezier);
+    transition: transform 150ms var(--bezier), background 150ms linear;
   }
   .count:hover {
     background: #474747;
@@ -178,11 +180,11 @@
   }
 
   .edit {
-    color: #808080;
+    color: #666;
     background: transparent;
   }
   .edit:hover {
-    background: #333;
+    background: #292929;
   }
 
   button:disabled,
@@ -230,12 +232,13 @@
 
   <div class="controls">
     {#if !editing}
-      <div class="static-buttons">
+      <div
+        class="static-buttons">
         <button class="edit" on:click={toggleEdit}>
           <img draggable="false" src="./images/icon-edit.svg" alt="edit icon" />
           Edit
         </button>
-        <button class="edit" on:click={toggleEdit}>
+        <button class="edit" on:click={clearCount}>
           <img
             draggable="false"
             src="./images/icon-clear.svg"
@@ -244,7 +247,8 @@
         </button>
       </div>
     {:else if editing}
-      <div class="editing-buttons">
+      <div
+        class="static-buttons">
         <button
           class="save"
           disabled={title.length > 0 ? null : true}

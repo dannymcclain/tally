@@ -51,13 +51,13 @@
   }
   input {
     flex: 2;
-    background: rgba(255, 255, 255, 0);
-    outline: none;
-    border: none;
-    padding: 13px 0;
-    margin: 0 16px 0 0;
-    cursor: text;
-    color: rgba(255, 255, 255, 1);
+    background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #ffffff;
   }
   input::placeholder {
     color: rgba(255, 255, 255, 0.4);

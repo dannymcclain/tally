@@ -3,27 +3,6 @@
   import { fly } from "svelte/transition";
   import { cubicInOut, cubicOut, backOut } from "svelte/easing";
   import { tallys } from "../stores.js";
-  import { tweened } from "svelte/motion";
-
-  const height = tweened(64, {
-    duration: 175,
-    easing: cubicInOut
-  });
-  $: cssHeight = $height + "px";
-
-  function toggleEdit() {
-    height.set(128);
-    editing = !editing;
-  }
-  function editOn() {
-    height.set(128);
-    editing = true;
-  }
-  function editOff() {
-    setTimeout(function() {
-      cancelUpdate();
-    }, 300);
-  }
 
   export let title;
   export let count;
@@ -38,21 +17,10 @@
   };
   let transitionOut = { x: -100, duration: 225, easing: cubicOut };
 
-  function decrement() {
-    let tallysUpdate = Array.from($tallys);
-    tallysUpdate.forEach(function(entry) {
-      if (entry.id === id) {
-        if (entry.count >= 1) {
-          let lowerCount = (entry.count -= 1);
-          entry.count = lowerCount;
-        } else {
-          return;
-        }
-      }
-      tallys.update(current => tallysUpdate);
-      localStorage.setItem("tallys", JSON.stringify($tallys));
-    });
+  function toggleEdit() {
+    editing = !editing;
   }
+
   function increment() {
     let tallysUpdate = Array.from($tallys);
     tallysUpdate.forEach(function(entry) {
@@ -89,20 +57,6 @@
       localStorage.setItem("tallys", JSON.stringify($tallys));
     });
     editing = false;
-    height.set(64);
-  }
-
-  function cancelUpdate() {
-    let oldTitle;
-    let currentTallys = Array.from($tallys);
-    currentTallys.forEach(function(entry) {
-      if (entry.id === id) {
-        oldTitle = entry.title;
-      }
-    });
-    title = oldTitle;
-    editing = false;
-    height.set(64);
   }
 </script>
 
@@ -115,7 +69,7 @@
     align-items: flex-end;
     margin-bottom: 24px;
     padding: 12px 16px 12px 12px;
-    background: #151515;
+    background: #292929;
     border-radius: 4px;
     overflow: hidden;
   }
@@ -132,15 +86,27 @@
   }
 
   .count {
-    flex: 1;
-    display: inline-flex;
+    background: #3d3d3d;
+    color: #fff;
+    font-weight: bold;
+    flex: 0;
+    width: 42px;
+    min-width: 42px;
+    max-width: 42px;
+    height: 42px;
+    border-radius: 4px;
+    display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    max-width: 92px;
     justify-content: center;
+    transition: background 200ms linear;
+    cursor: pointer;
+    /* cursor: n-resize; */
   }
-
+  .count:hover {
+    background: #474747;
+  }
   .controls {
     flex: 0;
     margin-top: 12px;
@@ -152,18 +118,11 @@
     width: 100%;
   }
 
-  .count p {
-    margin: 0 8px;
+  /* .count p {
+    margin: 0;
     padding: 0;
-    font-weight: bold;
-  }
-  .count button {
-    opacity: 0.4;
-    transition: opacity 200ms var(--bezier);
-  }
-  .count button:hover {
-    opacity: 0.6;
-  }
+  } */
+
   button {
     display: inline-flex;
     width: 32px;
@@ -214,23 +173,19 @@
     opacity: 0.4;
   }
   input {
-    /* background: #242424;
-    border: 2px solid rgba(255, 255, 255, 0.2); */
-    background: transparent;
-    border: 2px solid transparent;
-    /* border-bottom: 2px solid rgba(255, 255, 255, 0.2); */
+    background: #333333;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-sizing: border-box;
     flex: 3;
     min-width: 0;
     outline: none;
     padding: 8px;
     margin: 0;
     border-radius: 4px;
-    /* cursor: pointer; */
     color: rgba(255, 255, 255, 1);
     transition: border-color 200ms var(--bezier), background 200ms var(--bezier);
   }
   input:focus {
-    background: #242424;
     border: 2px solid rgba(255, 255, 255, 0.6);
   }
   input:disabled {
@@ -241,56 +196,44 @@
   }
 </style>
 
-<section style="height: {cssHeight}">
+<section>
   <div
     class="entry"
     in:fade={{ duration: 200, delay: 250 }}
     out:fade={{ duration: 150 }}>
     <input
       {id}
-      on:focus={editOn}
-      on:blur={editOff}
+      disabled={!editing ? true : null}
       class="title-input"
       type="text"
       bind:value={title} />
 
     {#if !editing}
-      <div transition:fade={{ duration: 200 }} class="count">
-        <button class="minus" on:click={decrement}>
-          <img
-            draggable="false"
-            src="./images/icon-minus.svg"
-            alt="minus icon" />
-        </button>
+      <div class="count" on:click={increment}>
         <p>{count}</p>
-        <button class="plus" on:click={increment}>
-          <img draggable="false" src="./images/icon-plus.svg" alt="plus icon" />
-        </button>
-        <button class="edit" on:click={toggleEdit}>
-          <img draggable="false" src="./images/icon-edit.svg" alt="edit icon" />
-        </button>
       </div>
     {/if}
   </div>
 
   <div class="controls">
-    <button class="delete" on:click={deleteTally}>
-      <img draggable="false" src="./images/icon-delete.svg" alt="delete icon" />
+    <button class="edit" on:click={toggleEdit}>
+      <img draggable="false" src="./images/icon-edit.svg" alt="edit icon" />
     </button>
-    <div>
-      <button class="cancel" on:click={cancelUpdate}>
+    {#if editing}
+      <button class="delete" on:click={deleteTally}>
         <img
           draggable="false"
-          src="./images/icon-cancel.svg"
-          alt="cancel icon" />
+          src="./images/icon-delete.svg"
+          alt="delete icon" />
       </button>
+
       <button
         class="save"
         disabled={title.length > 0 ? null : true}
         on:click={updateTitle}>
         <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
       </button>
-    </div>
+    {/if}
   </div>
 
   <!--end controls -->

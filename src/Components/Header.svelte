@@ -9,23 +9,25 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
-    margin: 48px 0;
+    margin: 64px 0 32px;
   }
   h1 {
-    font-weight: bold;
-    font-size: 20px;
+    font-weight: 900;
+    font-size: 32px;
     line-height: 1;
     color: #ffffff;
     padding: 0;
     margin: 0;
+    line-height: 1;
   }
   h2 {
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 1;
-    color: rgba(255, 255, 255, 0.4);
     padding: 0;
     margin: 0;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1;
+    color: #666666;
+    letter-spacing: 0.01em;
   }
 </style>
 

@@ -4,22 +4,24 @@
 
 <style>
   footer {
-    margin: 48px 0;
+    margin: 64px 0;
     font-size: 12px;
+    font-weight: 500;
     line-height: 1;
-    color: rgba(255, 255, 255, 0.4);
+    color: #666;
+    letter-spacing: 0.01em;
   }
   p {
     padding: 0;
     margin: 0;
   }
   a {
-    color: rgba(255, 255, 255, 0.4);
+    color: #666;
     text-decoration: underline;
-    transition: color 200ms var(--bezier);
+    transition: color 200ms linear;
   }
   a:hover {
-    color: rgba(255, 255, 255, 1);
+    color: #fff;
   }
 </style>
 

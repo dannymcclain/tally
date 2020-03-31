@@ -35,37 +35,46 @@
 
 <style>
   section {
-    padding: 10px 20px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    border: 2px solid rgba(255, 255, 255, 0.15);
-    border-radius: 4px;
-    font-size: 16px;
-    line-height: 1;
-    color: rgba(255, 255, 255, 1);
-    margin-bottom: 24px;
+    margin-bottom: 64px;
+    padding: 16px;
+    background: linear-gradient(180deg, #292929 0%, #1f1f1f 100%);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), inset 0px 2px 2px #2e2e2e;
+    border-radius: 6px;
   }
+
   input {
-    flex: 2;
-    background: rgba(255, 255, 255, 0);
+    box-sizing: border-box;
+    flex: auto;
+    min-width: 0;
+    width: 100%;
     outline: none;
     border: none;
-    padding: 13px 0;
+    padding: 9px;
     margin: 0 16px 0 0;
-    cursor: text;
-    color: rgba(255, 255, 255, 1);
+    background: transparent;
+    box-shadow: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #ffffff;
+    z-index: 10;
+  }
+  input:focus {
+    background: linear-gradient(180deg, #333333 0%, #292929 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #3d3d3d;
   }
   input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+    color: #666;
   }
+
   button {
-    flex: none;
-    display: inline-flex;
-    width: 28px;
-    height: 28px;
+    display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
@@ -75,36 +84,40 @@
     outline: none;
     border: none;
     cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #ffffff;
     margin: 0;
-    padding: 0;
-    background: rgba(255, 255, 255, 1);
-    border-radius: 50%;
-    transition: background 300ms var(--bezier);
+    height: 40px;
+    width: 40px;
+    max-width: 40px;
+    min-width: 40px;
+    background: linear-gradient(180deg, #333333 0%, #292929 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #3d3d3d;
+    border-radius: 20px;
+    transform: translateY(0);
+    transition: transform 100ms cubic-bezier(0.5, 0.25, 0.25, 1);
   }
-  button:hover {
-    background: rgba(255, 255, 255, 1);
+  button:active:enabled {
+    transform: translateY(1px);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+  }
+  button img {
+    opacity: 1;
+  }
+  button:hover:enabled {
+    background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
   }
   button:disabled {
     cursor: not-allowed;
-    background: rgba(255, 255, 255, 0.25);
   }
 </style>
 
 <section>
   <input type="text" bind:value={title} placeholder="Add a tally..." />
   <button disabled={title ? false : true} on:click={createTally}>
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M6 1V11M1 6H11"
-        stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round" />
-    </svg>
+    <img src="./images/icon-add.svg" alt="add icon" />
   </button>
 </section>

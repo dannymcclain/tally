@@ -1,26 +1,25 @@
 <script>
   import { fade } from "svelte/transition";
-  import { cubicOut } from "svelte/easing";
+  import { fly } from "svelte/transition";
+  import { cubicInOut, cubicOut, backOut } from "svelte/easing";
   import { tallys } from "../stores.js";
+  import { onMount } from "svelte";
+
   export let title;
   export let count;
   export let id;
+  export let editing = false;
 
-  function decrement() {
-    let tallysUpdate = Array.from($tallys);
-    tallysUpdate.forEach(function(entry) {
-      if (entry.id === id) {
-        if (entry.count >= 1) {
-          let lowerCount = (entry.count -= 1);
-          entry.count = lowerCount;
-        } else {
-          return;
-        }
-      }
-      tallys.update(current => tallysUpdate);
-      localStorage.setItem("tallys", JSON.stringify($tallys));
-    });
+  let currentInput;
+
+  onMount(() => {
+    currentInput = document.getElementById(id);
+  });
+
+  function toggleEdit() {
+    editing = !editing;
   }
+
   function increment() {
     let tallysUpdate = Array.from($tallys);
     tallysUpdate.forEach(function(entry) {
@@ -45,66 +44,85 @@
     });
     tallys.update(current => UpdatedTallyList);
     localStorage.setItem("tallys", JSON.stringify($tallys));
+    editing = false;
+  }
+  function updateTitle() {
+    let tallysUpdate = Array.from($tallys);
+    tallysUpdate.forEach(function(entry) {
+      if (entry.id === id) {
+        entry.title = title;
+      }
+      tallys.update(current => tallysUpdate);
+      localStorage.setItem("tallys", JSON.stringify($tallys));
+    });
+    editing = false;
+  }
+  function clearCount() {
+    let tallysUpdate = Array.from($tallys);
+    tallysUpdate.forEach(function(entry) {
+      if (entry.id === id) {
+        entry.count = 0;
+      }
+      tallys.update(current => tallysUpdate);
+      localStorage.setItem("tallys", JSON.stringify($tallys));
+    });
   }
 </script>
 
 <style>
   section {
-    padding: 20px 20px 20px 16px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    border: 2px solid rgba(255, 255, 255, 0.15);
-    border-radius: 4px;
-    font-size: 16px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 1);
     margin-bottom: 24px;
+    padding: 16px;
+    background: linear-gradient(180deg, #292929 0%, #1f1f1f 100%);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), inset 0px 2px 2px #2e2e2e;
+    border-radius: 6px;
   }
 
-  .count {
+  input {
+    box-sizing: border-box;
+    flex: auto;
+    min-width: 0;
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 9px;
+    margin: 0 16px 0 0;
+    background: linear-gradient(180deg, #333333 0%, #292929 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #3d3d3d;
+    border-radius: 6px;
     font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #ffffff;
+    z-index: 10;
   }
-  .controls,
-  .title {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
+  input:focus {
+    background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
   }
-  .title {
-    flex: 2;
-    justify-content: flex-start;
-  }
-  .title p {
-    padding: 0;
-    margin: 0;
-  }
-  .delete {
-    margin-right: 12px;
+  input:disabled {
     background: transparent;
-    opacity: 0.2;
-    transition: opacity 300ms var(--bezier);
-  }
-  section:hover .delete:hover {
-    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #fff;
     opacity: 1;
   }
+
   .controls {
-    flex: 1;
-    max-width: 108px;
-    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
   }
-  .controls p {
-    margin: 0;
-    padding: 0;
-  }
+
   button {
-    display: inline-flex;
-    width: 28px;
-    height: 28px;
+    display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
@@ -114,81 +132,113 @@
     outline: none;
     border: none;
     cursor: pointer;
-    margin: 0;
-    padding: 0;
-    background: rgba(255, 255, 255, 0.25);
-    border-radius: 50%;
-    transition: background 300ms var(--bezier);
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #ffffff;
+    margin: 0 12px 0 0;
+    height: 40px;
+    width: 40px;
+    max-width: 40px;
+    min-width: 40px;
+    background: transparent;
+    border-radius: 20px;
+    transform: translateY(0);
+    transition: transform 100ms cubic-bezier(0.5, 0.25, 0.25, 1);
   }
-  button:hover {
-    background: rgba(255, 255, 255, 1);
+  button:last-child {
+    margin: 0;
+  }
+  button:active:enabled {
+    transform: translateY(1px);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .default {
+    background: linear-gradient(180deg, #333333 0%, #292929 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #3d3d3d;
+  }
+  .default img {
+    opacity: 0.4;
+  }
+  .default:hover:enabled {
+    background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
+  }
+  .default:hover:enabled img {
+    opacity: 0.7;
+  }
+
+  .save {
+    background: linear-gradient(180deg, #264230 0%, #1e3325 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #295237;
+  }
+  .save img {
+    opacity: 0.8;
+  }
+  .save:hover:enabled {
+    background: linear-gradient(180deg, #294d36 0%, #1f3d2a 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #2a5c3c;
+  }
+  .save:hover:enabled img {
+    opacity: 1;
+  }
+
+  .delete {
+    background: linear-gradient(180deg, #402c2c 0%, #332222 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #522f2f;
+  }
+  .delete img {
+    opacity: 0.8;
+  }
+  .delete:hover:enabled {
+    background: linear-gradient(180deg, #4a3030 0%, #3d2727 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #5c3232;
+  }
+  .delete:hover:enabled img {
+    opacity: 1;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
   }
 </style>
 
-<section transition:fade={{ duration: 200, easing: cubicOut }}>
-  <div class="title">
-    <button class="delete" on:click={deleteTally}>
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 18 18"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M3 5H15L14.1528 15.1661C14.0664 16.2027 13.1999 17 12.1597
-          17H5.84027C4.80009 17 3.93356 16.2027 3.84717 15.1661L3 5Z"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round" />
-        <path
-          d="M1 5H17"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round" />
-        <path
-          d="M5 3C5 1.89543 5.89543 1 7 1H11C12.1046 1 13 1.89543 13 3V5H5V3Z"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-
-    </button>
-    <p class="title">{title}</p>
-  </div>
+<section>
+  <input
+    {id}
+    disabled={!editing ? true : null}
+    class="title-input"
+    type="text"
+    bind:value={title} />
   <div class="controls">
-    <button on:click={decrement}>
-      <svg
-        width="12"
-        height="2"
-        viewBox="0 0 12 2"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M1 1H11"
-          stroke="black"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-    </button>
-    <p class="count">{count}</p>
-    <button on:click={increment}>
-      <svg
-        width="12"
-        height="12"
-        viewBox="0 0 12 12"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M6 1V11M1 6H11"
-          stroke="black"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
+    {#if !editing}
+      <button class="default" on:click={toggleEdit}>
+        <img src="./images/icon-edit.svg" alt="edit icon" />
+      </button>
+      <button class="default" on:click={clearCount}>
+        <img src="./images/icon-clear.svg" alt="edit clear" />
+      </button>
+    {:else if editing}
+      <button
+        class="save"
+        disabled={title.length > 0 ? null : true}
+        on:click={updateTitle}>
+        <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
+      </button>
+      <button class="delete" on:click={deleteTally}>
+        <img
+          draggable="false"
+          src="./images/icon-delete.svg"
+          alt="delete icon" />
+      </button>
+    {/if}
+    <button
+      class="count default"
+      disabled={editing ? true : null}
+      on:click={increment}>
+      {count}
     </button>
   </div>
 </section>

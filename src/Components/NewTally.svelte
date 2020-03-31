@@ -36,48 +36,46 @@
 
 <style>
   section {
+    position: relative;
+  }
+
+  input {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 24px;
-    padding: 16px;
+    padding: 27px 24px;
     background: linear-gradient(180deg, #292929 0%, #1f1f1f 100%);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), inset 0px 2px 2px #2e2e2e;
     border-radius: 6px;
-  }
-
-  input {
     box-sizing: border-box;
     flex: auto;
     min-width: 0;
     width: 100%;
     outline: none;
     border: none;
-    padding: 9px;
-    margin: 0 16px 0 0;
-    background: transparent;
-    box-shadow: none;
-    border-radius: 6px;
     font-weight: bold;
     font-size: 16px;
     line-height: 16px;
     color: #ffffff;
-    z-index: 10;
   }
-  input:hover {
+  input:focus {
     background: linear-gradient(180deg, #333333 0%, #292929 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #3d3d3d;
   }
-  input:focus {
+  /* input:focus {
     background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
-  }
+  } */
   input::placeholder {
     color: #666;
   }
   button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -115,10 +113,10 @@
     background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
   }
-  button:disabled {
+  /* button:disabled {
     cursor: not-allowed;
     opacity: 0.4;
-  }
+  } */
 </style>
 
 <section>

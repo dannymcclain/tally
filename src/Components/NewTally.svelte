@@ -66,17 +66,14 @@
     color: #ffffff;
     z-index: 10;
   }
-  input:hover {
+  input:focus {
     background: linear-gradient(180deg, #333333 0%, #292929 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #3d3d3d;
-  }
-  input:focus {
-    background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
   }
   input::placeholder {
     color: #666;
   }
+
   button {
     display: flex;
     flex-direction: row;
@@ -107,7 +104,6 @@
     transform: translateY(1px);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
   }
-
   button img {
     opacity: 1;
   }
@@ -117,7 +113,6 @@
   }
   button:disabled {
     cursor: not-allowed;
-    opacity: 0.4;
   }
 </style>
 

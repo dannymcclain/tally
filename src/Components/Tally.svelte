@@ -158,14 +158,14 @@
     background: linear-gradient(180deg, #333333 0%, #292929 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #3d3d3d;
   }
-  .default img {
+  .default svg {
     opacity: 0.4;
   }
   .default:hover:enabled {
     background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
   }
-  .default:hover:enabled img {
+  .default:hover:enabled svg {
     opacity: 0.7;
   }
 
@@ -173,14 +173,14 @@
     background: linear-gradient(180deg, #264230 0%, #1e3325 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #295237;
   }
-  .save img {
+  .save svg {
     opacity: 0.8;
   }
   .save:hover:enabled {
     background: linear-gradient(180deg, #294d36 0%, #1f3d2a 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #2a5c3c;
   }
-  .save:hover:enabled img {
+  .save:hover:enabled svg {
     opacity: 1;
   }
 
@@ -188,14 +188,14 @@
     background: linear-gradient(180deg, #402c2c 0%, #332222 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #522f2f;
   }
-  .delete img {
+  .delete svg {
     opacity: 0.8;
   }
   .delete:hover:enabled {
     background: linear-gradient(180deg, #4a3030 0%, #3d2727 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #5c3232;
   }
-  .delete:hover:enabled img {
+  .delete:hover:enabled svg {
     opacity: 1;
   }
 
@@ -215,23 +215,78 @@
   <div class="controls">
     {#if !editing}
       <button class="default" on:click={toggleEdit}>
-        <img src="./images/icon-edit.svg" alt="edit icon" />
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            class="edit"
+            d="M7.5 4.50006L11.5 8.50006M2 10.0001V14.0001H6L13 7.00006C14.1046
+            5.89549 14.1046 4.10463 13 3.00006C11.8954 1.89549 10.1046 1.89549 9
+            3.00006L2 10.0001Z"
+            stroke="#fff"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+
       </button>
       <button class="default" on:click={clearCount}>
-        <img src="./images/icon-clear.svg" alt="edit clear" />
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M4 12L12 4M14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137 2
+            8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8Z"
+            stroke="#fff"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+
       </button>
     {:else if editing}
       <button
         class="save"
         disabled={title.length > 0 ? null : true}
         on:click={updateTitle}>
-        <img draggable="false" src="./images/icon-save.svg" alt="save icon" />
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M2 8L6 12L14 4"
+            stroke="#2BDD68"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+
       </button>
       <button class="delete" on:click={deleteTally}>
-        <img
-          draggable="false"
-          src="./images/icon-delete.svg"
-          alt="delete icon" />
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M3 8L3.78101 13.2481C3.90612 14.2489 4.75692 15 5.76556
+            15H10.2344C11.2431 15 12.0939 14.2489 12.219 13.2481L13 8M2 5H14M11
+            5V3C11 1.89543 10.1046 1 9 1H7C5.89543 1 5 1.89543 5 3V5H11Z"
+            stroke="#C64B4B"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+
       </button>
     {/if}
     <button

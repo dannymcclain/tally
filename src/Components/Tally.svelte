@@ -214,7 +214,7 @@
     bind:value={title} />
   <div class="controls">
     {#if !editing}
-      <button class="default" on:click={toggleEdit}>
+      <button title="Edit Title" class="default" on:click={toggleEdit}>
         <svg
           width="16"
           height="16"
@@ -233,7 +233,7 @@
         </svg>
 
       </button>
-      <button class="default" on:click={clearCount}>
+      <button title="Clear Count" class="default" on:click={clearCount}>
         <svg
           width="16"
           height="16"
@@ -252,6 +252,7 @@
       </button>
     {:else if editing}
       <button
+        title="Save"
         class="save"
         disabled={title.length > 0 ? null : true}
         on:click={updateTitle}>
@@ -270,7 +271,7 @@
         </svg>
 
       </button>
-      <button class="delete" on:click={deleteTally}>
+      <button title="Delete" class="delete" on:click={deleteTally}>
         <svg
           width="16"
           height="16"

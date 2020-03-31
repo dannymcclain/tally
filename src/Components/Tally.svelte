@@ -124,11 +124,6 @@
     justify-content: flex-start;
     align-items: center;
   }
-  .button-group {
-    display: flex;
-    flex-direction: row;
-    margin-right: 12px;
-  }
 
   button {
     display: flex;

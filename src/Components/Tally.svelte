@@ -188,7 +188,8 @@
     opacity: 1;
   }
   .default:active {
-    transform: translateY(2px);
+    transform: translateY(1px);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
   }
   .default:hover .default-icon {
     stroke: #fff;

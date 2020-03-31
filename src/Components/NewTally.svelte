@@ -104,7 +104,7 @@
     transform: translateY(1px);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
   }
-  button img {
+  button svg {
     opacity: 1;
   }
   button:hover:enabled {
@@ -119,6 +119,19 @@
 <section>
   <input type="text" bind:value={title} placeholder="Add a tally..." />
   <button disabled={title ? false : true} on:click={createTally}>
-    <img src="./images/icon-add.svg" alt="add icon" />
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M8.00001 2.99994V12.9999M2.99945 8.00001H12.9995"
+        stroke="white"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+
   </button>
 </section>

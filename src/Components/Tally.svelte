@@ -85,17 +85,6 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), inset 0px 2px 2px #2e2e2e;
     border-radius: 6px;
   }
-  .content {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    font-size: 16px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 1);
-    width: 100%;
-  }
 
   input {
     box-sizing: border-box;
@@ -208,14 +197,12 @@
 </style>
 
 <section>
-  <div class="content">
-    <input
-      {id}
-      disabled={!editing ? true : null}
-      class="title-input"
-      type="text"
-      bind:value={title} />
-  </div>
+  <input
+    {id}
+    disabled={!editing ? true : null}
+    class="title-input"
+    type="text"
+    bind:value={title} />
 
   <div class="controls">
     {#if !editing}

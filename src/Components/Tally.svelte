@@ -160,18 +160,32 @@
     border-radius: 20px;
     transform: translateY(0);
     transition: transform 100ms cubic-bezier(0.5, 0.25, 0.25, 1);
+    z-index: 10;
   }
 
+  .default:after {
+    border-radius: inherit;
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -10;
+    background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
+    transition: opacity 200ms linear;
+  }
   button:last-child {
     margin: 0;
   }
-  /* .default-icon {
-    transition: stroke 250ms linear;
-  } */
-  .default:hover {
-    /* transform: translateY(-2px); */
-    background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
+  .default-icon {
+    transition: stroke 200ms linear;
+  }
+  .default:hover:after {
+    opacity: 1;
   }
   .default:active {
     transform: translateY(2px);

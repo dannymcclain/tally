@@ -101,10 +101,6 @@
     color: #ffffff;
     z-index: 10;
   }
-  input:hover:enabled {
-    background: linear-gradient(180deg, #383838 0%, #2e2e2e 100%);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #3d3d3d;
-  }
   input:focus {
     background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
@@ -245,8 +241,4 @@
       {count}
     </button>
   </div>
-
-  <!--end controls -->
-  <!-- end entry-->
-
 </section>

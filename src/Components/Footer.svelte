@@ -4,7 +4,7 @@
 
 <style>
   footer {
-    margin: 48px 0;
+    margin: 64px 0;
     font-size: 12px;
     font-weight: 500;
     line-height: 1;

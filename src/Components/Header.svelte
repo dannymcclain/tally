@@ -9,7 +9,7 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
-    margin: 48px 0;
+    margin: 64px 0 32px;
   }
   h1 {
     font-weight: 900;

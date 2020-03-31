@@ -28,7 +28,7 @@
   }
   main {
     width: 90%;
-    max-width: 640px;
+    max-width: 580px;
     margin: 0 auto;
   }
 </style>

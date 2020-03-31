@@ -41,7 +41,7 @@
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 64px;
     padding: 16px;
     background: linear-gradient(180deg, #292929 0%, #1f1f1f 100%);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), inset 0px 2px 2px #2e2e2e;
@@ -89,7 +89,7 @@
     font-size: 16px;
     line-height: 16px;
     color: #ffffff;
-    margin: 0 0 0 12px;
+    margin: 0;
     height: 40px;
     width: 40px;
     max-width: 40px;

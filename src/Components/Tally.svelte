@@ -101,7 +101,6 @@
     font-weight: bold;
     font-size: 16px;
     line-height: 16px;
-    letter-spacing: -0.02em;
     color: #ffffff;
     z-index: 10;
   }
@@ -140,7 +139,6 @@
     font-weight: bold;
     font-size: 16px;
     line-height: 16px;
-    letter-spacing: -0.02em;
     color: #ffffff;
     margin: 0 12px 0 0;
     height: 40px;

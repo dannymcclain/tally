@@ -88,8 +88,9 @@
 
   input {
     box-sizing: border-box;
-    flex: 3;
+    flex: auto;
     min-width: 0;
+    width: 100%;
     outline: none;
     border: none;
     padding: 9px;
@@ -102,7 +103,9 @@
     line-height: 16px;
     letter-spacing: -0.02em;
     color: #ffffff;
+    z-index: 10;
   }
+
   input:focus {
     background: linear-gradient(180deg, #3d3d3d 0%, #333333 100%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
@@ -148,7 +151,8 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #3d3d3d;
     border-radius: 20px;
     transform: translateY(0);
-    transition: transform 100ms cubic-bezier(0.5, 0.25, 0.25, 1);
+    transition: transform 100ms cubic-bezier(0.5, 0.25, 0.25, 1),
+      opacity 200ms linear;
     z-index: 10;
   }
 
@@ -170,19 +174,80 @@
   button:last-child {
     margin: 0;
   }
+  button:active {
+    transform: translateY(1px);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
+  }
+
   .default-icon {
     transition: stroke 200ms linear;
   }
   .default:hover:after {
     opacity: 1;
   }
-  .default:active {
-    transform: translateY(1px);
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #474747;
-  }
   .default:hover .default-icon {
     stroke: #fff;
   }
+
+  .save {
+    background: linear-gradient(180deg, #264230 0%, #1e3325 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #295237;
+  }
+  .save img {
+    opacity: 0.8;
+    transition: opacity 200ms linear;
+  }
+  .save:after {
+    border-radius: inherit;
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -10;
+    background: linear-gradient(180deg, #294d36 0%, #1f3d2a 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #2a5c3c;
+    transition: opacity 200ms linear;
+  }
+  .save:hover:after {
+    opacity: 1;
+  }
+  .save:hover img {
+    opacity: 1;
+  }
+  .delete {
+    background: linear-gradient(180deg, #402c2c 0%, #332222 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #522f2f;
+  }
+  .delete img {
+    opacity: 0.8;
+    transition: opacity 200ms linear;
+  }
+  .delete:after {
+    border-radius: inherit;
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -10;
+    background: linear-gradient(180deg, #4a3030 0%, #3d2727 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 1px 0px #5c3232;
+    transition: opacity 200ms linear;
+  }
+  .delete:hover:after {
+    opacity: 1;
+  }
+  .delete:hover img {
+    opacity: 1;
+  }
+
   button:disabled,
   button:disabled:hover,
   button:disabled:active {
@@ -203,7 +268,6 @@
     class="title-input"
     type="text"
     bind:value={title} />
-
   <div class="controls">
     {#if !editing}
       <div class="button-group">
